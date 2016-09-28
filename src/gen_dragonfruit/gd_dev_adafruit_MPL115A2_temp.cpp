@@ -7,8 +7,8 @@ void gd_dev_adafruit_MPL115A2_temp_open(void){
     mpl115a2t1.begin();
 }
 
-long gd_dev_adafruit_MPL115A2_temp_read(void){
-  long value = 0;
+int32_t gd_dev_adafruit_MPL115A2_temp_read(void){
+  int32_t value = 0;
   value = mpl115a2t1.getTemperature()*10;
   return value;
 }
