@@ -1,5 +1,8 @@
 #include "gd_board.h"
 
+//Not sure where to put this
+digitalWrite(_PIN_SEN_EN_, HIGH);
+
 static void gd_board_print_build_opts();
 static void gd_board_setup(struct gd_board* b);
 static void gd_board_post();

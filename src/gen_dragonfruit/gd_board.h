@@ -7,7 +7,7 @@
 #include "gd_dev_adafruit_MPL115A2_temp.h"
 #include "gd_dev_adafruit_MPL115A2_press.h"
 
-
+#define _PIN_SEN_EN_ 4
 
 #ifndef GD_BOARD_H
 #define GD_BOARD_H

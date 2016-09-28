@@ -1,6 +1,6 @@
 #include <Arduino.h>
 
-#define _PIN_GD_APOGEE_SP215_ A2
+#define _PIN_GD_APOGEE_SP215_ 0x48
 
 #ifndef GD_DEV_APOGEE_SP215_H
 #define GD_DEV_APOGEE_SP215_H
