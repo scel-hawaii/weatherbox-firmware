@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <Wire.h>
 
 #define _PIN_GD_APOGEE_SP215_ 0x48
 

@@ -8,9 +8,9 @@ int gd_dev_apogee_sp215_read(void){
     int value = 555;
     #ifndef SEN_STUB
     Wire.beginTransmission(_PIN_GD_APOGEE_SP215_);
-    
+
     /* Options */
-    Wire.write(Ox8C);
+    Wire.write(0x8C);
 
     /* Communicate through I2C */
     Wire.requestFrom(_PIN_GD_APOGEE_SP215_, 3);

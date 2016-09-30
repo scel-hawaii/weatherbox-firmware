@@ -9,8 +9,8 @@ void gd_dev_adafruit_MPL115A2_press_open(void){
 
 uint16_t gd_dev_adafruit_MPL115A2_press_read(void){
   uint16_t value = 0;
-  #ifndef SEN_STUB 
-  value = mpl115a2.getPressure()*1000;
+  #ifndef SEN_STUB
+  value = mpl115a2t1_press.getPressure()*1000;
   #endif
   return value;
 }
