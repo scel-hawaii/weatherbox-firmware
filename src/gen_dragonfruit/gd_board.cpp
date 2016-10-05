@@ -104,10 +104,9 @@ static void gd_board_post(){
 
     // Check MPL115a2 temperature
     int32_t mpl115a2_temp_val = gd_dev_adafruit_MPL115A2_temp_read();
-    Serial.print(F("[P] mpl115a2 value: "));
+    Serial.print(F("[P] mpl115a2 temp: "));
     Serial.print(mpl115a2_temp_val);
-    Serial.print(F("."));
-
+    Serial.println(" K");
     if(mpl115a2_temp_val < 0){
         Serial.println(F("[P] \tError: mpl115a2 temp out of range"));
     }
@@ -116,7 +115,7 @@ static void gd_board_post(){
     uint16_t mpl115a2_press = gd_dev_adafruit_MPL115A2_press_read();
     Serial.print(F("[P] mpl115a2 pressure: "));
     Serial.print(mpl115a2_press);
-    Serial.print(".");
+    Serial.println(" Pa");
 
     if(mpl115a2_press < 0){
         Serial.println(F("[P] Error: mpl115a2 pressure out of range"));

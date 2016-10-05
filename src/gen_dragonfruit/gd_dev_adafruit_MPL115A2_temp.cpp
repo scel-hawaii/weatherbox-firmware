@@ -10,7 +10,7 @@ void gd_dev_adafruit_MPL115A2_temp_open(void){
 int32_t gd_dev_adafruit_MPL115A2_temp_read(void){
   int32_t value = 0;
   #ifndef SEN_STUB
-  value = mpl115a2t1.getTemperature()*10;
+  value = mpl115a2t1.getTemperature() + 273.15; //Function gives C, return K
   #endif
   return value;
 }
