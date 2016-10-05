@@ -4,7 +4,7 @@
 static HIH613x hih6131(0x27);
 
 void gc_dev_hih6131_open(void){
-
+    Wire.begin(9600);
 }
 
 int gc_dev_hih6131_temp_decic_read(void){
