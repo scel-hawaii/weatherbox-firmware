@@ -48,7 +48,7 @@ void gc_board_init(gc_board *b){
     b->data_packet.batt_mv = 0;
     b->data_packet.panel_mv = 0;
     b->data_packet.apogee_w_m2 = 0;
-    b->data_packet.hih6131_temp_decic = 0;
+    b->data_packet.hih6131_temp_decik = 0;
     b->data_packet.hih6131_humidity_pct = 0;
     b->data_packet.mpl115a2t1_press_pa = 0;
 }
@@ -91,22 +91,20 @@ static void gc_board_post(){
 
     // Check hih6131 temperature
 
-    Serial.println(F("[P] Check hih6131_temp_decic value"));
-    int hih6131_temp_decic_val = gc_dev_hih6131_temp_decic_read();
+    Serial.println(F("[P] Check hih6131_temp_decik value"));
+    uint16_t hih6131_temp_decik_val = gc_dev_hih6131_temp_decik_read();
 
-    Serial.print(F("[P] hih6131_temp_decic value: "));
-    Serial.print(hih6131_temp_decic_val);
-    Serial.println(F(" C"));
+    Serial.print(F("[P] hih6131_temp_decik value: "));
+    Serial.print(hih6131_temp_decik_val);
+    Serial.println(F(" K"));
 
-    if(hih6131_temp_decic_val < 0){
+    if(hih6131_temp_decik_val < 0){
         Serial.println(F("[P] \tError: hih6131 temp out of range"));
     }
 
-
     // Check hih6131 humidity
-
     Serial.println(F("[P] Check hih6131_humidity value"));
-    int hih6131_humidity_pct_val = gc_dev_hih6131_humidity_pct_read();
+    uint16_t hih6131_humidity_pct_val = gc_dev_hih6131_humidity_pct_read();
 
     Serial.print(F("[P] hih6131_humidity_pct value: "));
     Serial.print(hih6131_humidity_pct_val);
