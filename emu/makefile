@@ -5,6 +5,10 @@ init:
 	mv simavr-1.3 simavr
 	cd simavr && make
 
+# Install required packages for debian/ubuntu
+install-pkgs-debian:
+        sudo apt-get install avr-libc libelf libelf-dev freeglut3-dev pkg-config
+
 clean:
 	rm -rf simavr simavr-1.3 v1.3.tar.gz
 
