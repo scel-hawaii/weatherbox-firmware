@@ -63,10 +63,10 @@ static void gd_board_print_build_opts()
 static void gd_board_setup(struct gd_board* b){
     Serial.begin(9600);
     Serial.println(F("Board Setup Start"));
-    
+
     //Sensor On/Off, sets enable pin HIGH
     digitalWrite(_PIN_SEN_EN_, HIGH);
-    
+
     // Open Devices
     gd_dev_xbee_open();
     gd_dev_honeywell_HIH6131_open();
@@ -215,6 +215,10 @@ static void gd_board_run_cmd(struct gd_board* b){
                 switch(input){
                     case 'T':
                         Serial.println(F("CMD Mode cmd"));
+                        break;
+                    case 'P':
+                        Serial.println(F("Running POST"));
+                        b->post();
                         break;
                     default:
                         break;
