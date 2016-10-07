@@ -20,9 +20,9 @@ struct gd_packet{
   uint16_t batt_mv;           // Battery Voltage (in milli volts)
   uint16_t panel_mv;          // Panel Voltage (in milli volts)
   uint16_t apogee_sp215;      // Solar radiance
-  int16_t mpl115a2t1_temp;    // Temperature (Celsius)
+  uint16_t mpl115a2t1_temp;    // Temperature (centiKelvin)
   uint16_t hih6131_humidity_pct;  // Humidity (percentage)
-  uint16_t mpl115a2t1_press;  // Pressure (kPa)
+  uint32_t mpl115a2t1_press;  // Pressure (kPa)
 };
 
 struct gd_heartbeat_packet{

@@ -5,13 +5,10 @@ void gd_dev_spanel_open(void){
 }
 
 int gd_dev_spanel_read(void){
-    int value = 555;
-
+    float value = 555.0;
     #ifndef SEN_STUB
-    value = analogRead(_PIN_GD_SPANEL_);
-    //2*analogRead(_PIN_GD_SPANEL_)*5000.0/1023;
+    value = 2.0 * (float)analogRead(_PIN_GD_SPANEL_) *(5000.0/1023);
     #endif
-
     return value;
 }
 

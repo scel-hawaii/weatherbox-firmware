@@ -21,7 +21,7 @@ int gd_dev_apogee_sp215_read(void){
         value += Wire.read();
     }
     Wire.endTransmission();
-    //value = (value*5000.00)/(0x7FFF);
+    value = (value*5000.00)/(0x7FFF);
     #endif
     return value;
 }
