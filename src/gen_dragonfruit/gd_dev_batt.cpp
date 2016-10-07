@@ -8,9 +8,8 @@ int gd_dev_batt_read(void){
     int value = 555;
 
     #ifndef SEN_STUB
-    value = analogRead(_PIN_GD_BATT_);
+    value = analogRead(_PIN_GD_BATT_)*5000.0/1023; //Function gives ADC value (0-1023), then convert
     #endif
 
     return value;
 }
-
