@@ -1,4 +1,5 @@
 #include <Adafruit_ADS1015.h>
+#include <Wire.h>
 
 #ifndef GC_DEV_SOLAR_H
 #define GC_DEV_SOLAR_H
