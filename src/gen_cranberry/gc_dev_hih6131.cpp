@@ -7,12 +7,12 @@ void gc_dev_hih6131_open(void){
 
 }
 
-uint16_t gc_dev_hih6131_temp_decik_read(void){
+uint16_t gc_dev_hih6131_temp_centik_read(void){
     int16_t value = 89;
 
     #ifndef SEN_STUB
     hih6131.update();
-    value = hih6131.getTemperature() + 273.15;
+    value = (float)hih6131.getTemperature()*100.0 + 27315;
     #endif
 
     return value;

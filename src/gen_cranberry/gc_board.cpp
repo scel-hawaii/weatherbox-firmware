@@ -48,7 +48,7 @@ void gc_board_init(gc_board *b){
     b->data_packet.batt_mv = 0;
     b->data_packet.panel_mv = 0;
     b->data_packet.apogee_w_m2 = 0;
-    b->data_packet.hih6131_temp_decik = 0;
+    b->data_packet.hih6131_temp_centik = 0;
     b->data_packet.hih6131_humidity_pct = 0;
     b->data_packet.mpl115a2t1_press_pa = 0;
 }
@@ -92,13 +92,13 @@ static void gc_board_post(){
     // Check hih6131 temperature
 
     Serial.println(F("[P] Check hih6131_temp_decik value"));
-    uint16_t hih6131_temp_decik_val = gc_dev_hih6131_temp_decik_read();
+    uint16_t hih6131_temp_centik_val = gc_dev_hih6131_temp_centik_read();
 
-    Serial.print(F("[P] hih6131_temp_decik value: "));
-    Serial.print(hih6131_temp_decik_val);
-    Serial.println(F(" K"));
+    Serial.print(F("[P] hih6131_temp_centik value: "));
+    Serial.print(hih6131_temp_centik_val);
+    Serial.println(F(" cK"));
 
-    if(hih6131_temp_decik_val < 0){
+    if(hih6131_temp_centik_val < 0){
         Serial.println(F("[P] \tError: hih6131 temp out of range"));
     }
 
