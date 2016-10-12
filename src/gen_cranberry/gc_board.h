@@ -1,5 +1,5 @@
 #include "gc_dev_xbee.h"
-#include "gc_dev_apogeesp212.h"
+#include "gc_dev_sp212.h"
 #include "gc_dev_batt.h"
 #include "gc_dev_spanel.h"
 #include "gc_dev_eeprom_naddr.h"

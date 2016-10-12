@@ -3,6 +3,6 @@
 
 #ifndef GC_DEV_SOLAR_H
 #define GC_DEV_SOLAR_H
-void gc_dev_apogeesp212_open(void);
-uint16_t gc_dev_apogeesp212_read(void);
+void gc_dev_sp212_open(void);
+uint16_t gc_dev_sp212_read(void);
 #endif
