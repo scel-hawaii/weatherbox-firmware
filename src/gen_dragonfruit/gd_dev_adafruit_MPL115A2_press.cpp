@@ -10,7 +10,7 @@ void gd_dev_adafruit_MPL115A2_press_open(void){
 uint32_t gd_dev_adafruit_MPL115A2_press_read(void){
   float value = 88;
   #ifndef SEN_STUB
-  value = mpl115a2t1_press.getPressure()*1000; //Function gives kPa, x1000 for Pa
+  value = mpl115a2t1_press.getPressure()*1000; // Function returns pressure in kPa, convert pressure value to Pa
   #endif
   return (uint32_t)value;
 }

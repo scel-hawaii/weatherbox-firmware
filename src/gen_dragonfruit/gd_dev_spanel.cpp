@@ -7,6 +7,7 @@ void gd_dev_spanel_open(void){
 int gd_dev_spanel_read(void){
     float value = 555.0;
     #ifndef SEN_STUB
+    // Voltage divider on board halves the reading, so multiply by two to obtain orginal reading. 
     value = 2.0 * (float)analogRead(_PIN_GD_SPANEL_) *(5000.0/1023);
     #endif
     return value;

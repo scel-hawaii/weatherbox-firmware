@@ -21,6 +21,7 @@ int gd_dev_apogee_sp215_read(void){
         value += Wire.read();
     }
     Wire.endTransmission();
+    /* Value received from Wire.read() returns (solar irridiance value)^8, multiply by five volts (5.0x10^3), then divide by 0x7FFF (2^15) to obtain mV. */
     value = (value*5000.00)/(0x7FFF);
     #endif
     return value;
