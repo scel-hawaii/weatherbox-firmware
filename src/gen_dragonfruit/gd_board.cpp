@@ -182,7 +182,7 @@ static void gd_board_sample(struct gd_board* b){
 }
 
 static int gd_board_ready_tx(struct gd_board* b){
-    // Disabled this for apple deployment on 2016-10-06 with T=30s
+    // Disabled this for dragonfruit deployment on 2016-10-06 with T=30s
     /*
     const int max_samples = 20;
     if(b->sample_count > max_samples-1){
