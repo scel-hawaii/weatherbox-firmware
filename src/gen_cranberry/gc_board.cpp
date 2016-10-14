@@ -50,7 +50,7 @@ void gc_board_init(gc_board *b){
     b->data_packet.apogee_w_m2 = 0;
     b->data_packet.hih6131_temp_decic = 0;
     b->data_packet.hih6131_humidity_pct = 0;
-    b->data_packet.mpl115a2t1_press_kpa = 0;
+    b->data_packet.mpl115a2t1_press_pa = 0;
 }
 
 static void gc_board_print_build_opts()
@@ -67,12 +67,12 @@ static void gc_board_setup(struct gc_board* b){
     // Open Devices
     digitalWrite(_PIN_SEN_EN, HIGH);
     gc_dev_xbee_open();
-    gc_dev_solar_open();
+    gc_dev_sp212_open();
     gc_dev_batt_open();
     gc_dev_spanel_open();
     gc_dev_eeprom_naddr_open();
     gc_dev_hih6131_open();
-    //gc_dev_mpl115a2t1_open();
+    gc_dev_mpl115a2t1_open();
 
     // load the address from the hardware
     b->node_addr = gc_dev_eeprom_naddr_read();
@@ -117,20 +117,20 @@ static void gc_board_post(){
     }
 
     // Check mpl115a2t1 pressure
-    Serial.println(F("[P] Check mpl115a2t1_press_kpa value"));
-    int mpl115a2t1_press_kpa_val = gc_dev_mpl115a2t1_press_kpa_read();
+    Serial.println(F("[P] Check mpl115a2t1_press_pa value"));
+    uint32_t mpl115a2t1_press_pa_val = gc_dev_mpl115a2t1_press_pa_read();
 
-    Serial.print(F("[P] mpl115a2t1_press_kpa value: "));
-    Serial.print(mpl115a2t1_press_kpa_val);
-    Serial.println(F(" kPa"));
+    Serial.print(F("[P] mpl115a2t1_press_pa value: "));
+    Serial.print(mpl115a2t1_press_pa_val);
+    Serial.println(F(" Pa"));
 
-    if(mpl115a2t1_press_kpa_val < 0){
+    if(mpl115a2t1_press_pa_val < 0){
         Serial.println(F("[P] \tError: mpl115a2t1 pressure out of range"));
     }
 
     // Check apogee_sp212
     Serial.println(F("[P] Check apogee_sp212 value"));
-    int apogee_sp212_val = gc_dev_solar_read();
+    int apogee_sp212_val = gc_dev_sp212_read();
 
     Serial.print(F("[P] apogee_sp212 solar irr value: "));
     Serial.print(apogee_sp212_val);
@@ -142,7 +142,7 @@ static void gc_board_post(){
 
     // Check batt
     Serial.println(F("[P] Check batt value"));
-    int batt_val = gc_dev_batt_read();
+    uint16_t batt_val = gc_dev_batt_read();
 
     Serial.print(F("[P] batt value: "));
     Serial.print(batt_val);
@@ -175,7 +175,7 @@ static void gc_board_sample(struct gc_board* b){
     data_packet->uptime_ms           = millis();
     data_packet->batt_mv             = gc_dev_batt_read();
     data_packet->panel_mv            = gc_dev_spanel_read();
-    data_packet->apogee_w_m2         = gc_dev_solar_read();
+    data_packet->apogee_w_m2         = gc_dev_sp212_read();
 
     Serial.println(F("Sample End"));
     b->sample_count++;
