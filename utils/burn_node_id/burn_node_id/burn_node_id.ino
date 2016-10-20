@@ -72,7 +72,7 @@ void loop(){
                     low = number & 0xff;
                     Serial.println(high, BIN);
                     Serial.println(low, BIN);
-                    
+
                     Serial.println("Burning Node ID to address 2 and 3");
                     EEPROM.write(2,low);
                     EEPROM.write(3,high);
@@ -105,7 +105,7 @@ void loop(){
 }
 
 void printIntro(){
-    Serial.println("REIS Weatherbox Node ID burn program loaded.");
+    Serial.println("SCEL Weatherbox Node ID burn program loaded.");
     Serial.print("This program will write to the arduino EEPROM");
     Serial.print("which is a part of memory that is persistant through");
     Serial.print("Shutdowns. This means that we will be able to burn the");
