@@ -123,10 +123,10 @@ static void gd_board_post(){
     }
 
     // Check apogee_sp215
-    int apogee_sp215_val = gd_dev_apogee_sp215_read();
+    uint32_t apogee_sp215_val = gd_dev_apogee_sp215_read();
     Serial.print(F("[P] apogee_sp215 solar irr value: "));
     Serial.print(apogee_sp215_val);
-    Serial.println(F(" mV"));
+    Serial.println(F(" uV"));
 
     if(apogee_sp215_val < 0){
         Serial.println(F("[P] \tError: apogee solar irr out of range"));
@@ -142,7 +142,7 @@ static void gd_board_post(){
         Serial.println(F("[P] Error: batt out of range"));
     }
 
-    // check panel sensor value
+    // Check panel sensor value
     int spanel_val = gd_dev_spanel_read();
     Serial.print(F("[P] spanel value: "));
     Serial.print(spanel_val);
