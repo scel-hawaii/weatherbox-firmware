@@ -10,7 +10,7 @@ uint16_t gc_dev_batt_read(void){
     uint16_t value = 4000;
 
     #ifndef SEN_STUB
-    value = ((float)adc.readADC_SingleEnded(2)*188.0)/(1000.0);
+    value = 2.0*((float)adc.readADC_SingleEnded(2)*188.0)/(1000.0);
     #endif
 
     return value;
