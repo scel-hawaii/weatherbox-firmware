@@ -11,7 +11,9 @@ uint16_t gc_dev_batt_read(void){
 
     #ifndef SEN_STUB
     /* Scaling factor of 2.0 is used because of the voltage divider
-    placed in the circuit (Note: Cranberry v3.5.0 Schematic incorrect) */
+    placed in the circuit (Note: Cranberry v3.5.0 Schematic incorrect 
+    R21 and R20 are described to have values of 150k and 51k respectively,
+    these values are the same in hardware. */
     value = 2.0*((float)adc.readADC_SingleEnded(2)*188.0)/(1000.0);
     #endif
 
