@@ -4,6 +4,8 @@ void gc_dev_xbee_open(void)
 {
     soft_serial.begin(9600);
     xbee.begin(soft_serial);
+    digitalWrite(3, HIGH);
+    //digitalWrite(A0, HIGH);
 }
 
 int gc_dev_xbee_avail(void)

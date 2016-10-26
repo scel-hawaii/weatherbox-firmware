@@ -13,7 +13,7 @@ void gc_dev_xbee_write(uint8_t* data, int data_len);
 
 static XBee xbee = XBee();
 
-const byte rx_pin = 2;
-const byte tx_pin = 9;
+const byte rx_pin = 2; //2
+const byte tx_pin = A3;  //A3
 static SoftwareSerial soft_serial(rx_pin, tx_pin);
 #endif
