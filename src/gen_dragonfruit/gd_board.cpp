@@ -126,7 +126,7 @@ static void gd_board_post(){
     uint32_t apogee_sp215_val = gd_dev_apogee_sp215_read();
     Serial.print(F("[P] apogee_sp215 solar irr value: "));
     Serial.print(apogee_sp215_val);
-    Serial.println(F(" uV"));
+    Serial.println(F(" mV"));
 
     if(apogee_sp215_val < 0){
         Serial.println(F("[P] \tError: apogee solar irr out of range"));
