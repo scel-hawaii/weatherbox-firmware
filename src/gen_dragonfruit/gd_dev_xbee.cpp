@@ -4,7 +4,7 @@ void gd_dev_xbee_open(void)
 {
     soft_serial.begin(9600);
     xbee.begin(soft_serial);
-    // Set Xbee enable pin to high
+    // Enable voltage regulator pin to power the Xbee 
     digitalWrite(3, HIGH);
 }
 
