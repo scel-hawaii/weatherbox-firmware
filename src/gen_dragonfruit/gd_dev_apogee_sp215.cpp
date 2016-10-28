@@ -3,12 +3,16 @@
 void gd_dev_apogee_sp215_open(void){
 
     /* Initiate Wire library and join I2C bus as slave */
-    Wire.begin(_DEV_ADDR_GD_APOGEE_SP215_);
+    Wire.begin();
+
+    /* Begin transmission to the I2C slave device with the given address */
+    Wire.beginTransmission(_DEV_ADDR_GD_APOGEE_SP215_);
 
     /* Enable read bit and select 16-bit sample rate and select sampling rate
     of 8 SPS. */
     Wire.write(0x8C);
 
+    Wire.endTransmission();
 }
 
 uint32_t gd_dev_apogee_sp215_read(void){
@@ -16,7 +20,7 @@ uint32_t gd_dev_apogee_sp215_read(void){
     #ifndef SEN_STUB
 
     /* Begin transmission to the I2C slave device with the given address */
-    Wire.beginTransmission(0x48);
+    Wire.beginTransmission(_DEV_ADDR_GD_APOGEE_SP215_);
 
     /* Communicate through I2C */
     Wire.requestFrom(_DEV_ADDR_GD_APOGEE_SP215_, 3);
