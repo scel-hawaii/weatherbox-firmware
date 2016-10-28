@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-#define _PIN_GD_APOGEE_SP215_ 0x48
+#define _DEV_ADDR_GD_APOGEE_SP215_ 0x48
 
 #ifndef GD_DEV_APOGEE_SP215_H
 #define GD_DEV_APOGEE_SP215_H
