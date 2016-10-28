@@ -22,7 +22,7 @@ struct gd_packet{
   uint32_t apogee_sp215;      // Solar radiance
   uint16_t mpl115a2t1_temp;    // Temperature (centiKelvin)
   uint16_t hih6131_humidity_pct;  // Humidity (percentage)
-  uint32_t mpl115a2t1_press;  // Pressure (kPa)
+  uint32_t mpl115a2t1_press;  // Pressure (Pa)
 };
 
 struct gd_heartbeat_packet{
