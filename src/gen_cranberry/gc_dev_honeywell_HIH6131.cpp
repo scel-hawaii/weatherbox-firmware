@@ -1,4 +1,4 @@
-#include "gc_dev_hih6131.h"
+#include "gc_dev_honeywell_HIH6131.h"
 #include "HIH613x.h"
 
 static HIH613x hih6131(0x27);

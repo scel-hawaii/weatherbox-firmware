@@ -1,4 +1,4 @@
-#include "gc_dev_sp212.h"
+#include "gc_dev_apogee_SP212.h"
 
 static Adafruit_ADS1115 adc;
 
