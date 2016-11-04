@@ -168,11 +168,17 @@ static int gc_board_ready_run_cmd(struct gc_board* b){
 }
 
 static void gc_board_run_cmd(struct gc_board* b){
-    Serial.println(F("Enter CMD Mode"));
+    Serial.println(F("\nEnter CMD Mode"));
+    Serial.println(F("[E] - Exit Command Mode"));
+    Serial.println(F("[P] - Run Power On Self-Test"));
+    Serial.println(F("[S] - Sensor Sampling Menu"));
+
+
     while(Serial.read() != '\n'); //In Arduino IDE, make sure line ending is \n
     while(1){
         if(Serial.available()){
-            char input = Serial.read();
+            char input = Serial.read(), input2;
+
             Serial.print(F("GOT A CMD: "));
             Serial.println(input);
             while(Serial.read() != '\n');
@@ -182,13 +188,58 @@ static void gc_board_run_cmd(struct gc_board* b){
             }
             else{
                 switch(input){
-                    case 'T':
-                        Serial.println(F("CMD Mode cmd"));
-                        break;
                     case 'P':
                         Serial.println(F("Running POST"));
                         b->post();
                         break;
+                    case 'S':
+                        Serial.println(F("\nSensor Sampling Menu"));
+                        Serial.println(F("[1] - Node Address"));
+                        Serial.println(F("[2] - HIH6131 Temperature (cK)"));
+                        Serial.println(F("[3] - HIH6131 Humidity (\%)"));
+                        Serial.println(F("[4] - MPL115A2 Pressure (Pa)"));
+                        Serial.println(F("[5] - SP212 Solar Irradiance (mW)"));
+                        Serial.println(F("[6] - Battery Voltage (mW)"));
+                        Serial.println(F("[7] - Solar Panel Voltage (mW)"));
+                        Serial.println(F("[E] - Exit to Main Menu"));
+
+                        while(1){
+                            if(Serial.available()){
+                                input2 = Serial.read();
+                                Serial.print(F("GOT A CMD: "));
+                                Serial.println(input2);
+                                while(Serial.read() != '\n');
+                                    if(input2 == 'E'){
+                                        Serial.println(F("Exiting to Main Menu"));
+                                        break;
+                                    }
+                                    switch(input2){
+                                        case '1':
+                                            gc_dev_eeprom_naddr_post();
+                                            break;
+                                        case '2':
+                                            gc_dev_honeywell_HIH6131_temp_centik_post();
+                                            break;
+                                        case '3':
+                                            gc_dev_honeywell_HIH6131_humidity_pct_post();
+                                            break;
+                                        case '4':
+                                            gc_dev_adafruit_MPL115A2_press_pa_post();
+                                            break;
+                                        case '5':
+                                            gc_dev_apogee_SP212_solar_irr_post();
+                                            break;
+                                        case '6':
+                                            gc_dev_batt_post();
+                                            break;
+                                        case '7':
+                                            gc_dev_spanel_post();
+                                            break;
+                                        default:
+                                            break;
+                                  }
+                              }
+                          }
                     default:
                         break;
                 }
