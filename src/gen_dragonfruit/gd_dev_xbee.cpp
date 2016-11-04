@@ -6,6 +6,16 @@ void gd_dev_xbee_open(void)
     xbee.begin(soft_serial);
     // Enable voltage regulator pin to power the Xbee 
     digitalWrite(3, HIGH);
+
+    // Enable DTR pin as output
+    pinMode(A1, OUTPUT);
+    digitalWrite(A1, LOW);
+
+    // Set RSSI pin as input
+    pinMode(A2, INPUT);
+
+    // Set Xbee sleep pin as input
+    pinMode(A3, INPUT);
 }
 
 int gd_dev_xbee_avail(void)
