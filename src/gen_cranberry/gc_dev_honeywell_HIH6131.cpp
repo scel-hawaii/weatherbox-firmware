@@ -7,6 +7,7 @@ void gc_dev_honeywell_HIH6131_open(void){
     Wire.begin(9600);
 }
 
+
 uint16_t gc_dev_honeywell_HIH6131_temp_centik_read(void){
     int16_t value = 30000;
 
