@@ -86,80 +86,25 @@ static void gc_board_post(){
     Serial.println(F("POST Begin"));
 
     // Display node addr
-    Serial.print(F("[P] node addr: "));
-    Serial.println((int) gc_dev_eeprom_naddr_read());
+    gc_dev_eeprom_naddr_post();
 
     // Check hih6131 temperature
-    Serial.println(F("[P] Check hih6131_temp_centik value"));
-    int hih6131_temp_centik_val = gc_dev_honeywell_HIH6131_temp_centik_read();
-
-    Serial.print(F("[P] hih6131_temp_centik value: "));
-    Serial.print(hih6131_temp_centik_val);
-    Serial.println(F(" cK"));
-
-    if(hih6131_temp_centik_val < 0){
-        Serial.println(F("[P] \tError: hih6131 temp out of range"));
-    }
+    gc_dev_honeywell_HIH6131_temp_centik_post();
 
     // Check hih6131 humidity
-    Serial.println(F("[P] Check hih6131_humidity value"));
-    int hih6131_humidity_pct_val = gc_dev_honeywell_HIH6131_humidity_pct_read();
-
-    Serial.print(F("[P] hih6131_humidity_pct value: "));
-    Serial.print(hih6131_humidity_pct_val);
-    Serial.println(F("\%"));
-
-    if(hih6131_humidity_pct_val < 0){
-        Serial.println(F("[P] \tError: hih6131 humidity out of range"));
-    }
+    gc_dev_honeywell_HIH6131_humidity_pct_post();
 
     // Check mpl115a2t1 pressure
-    Serial.println(F("[P] Check mpl115a2t1_press_pa value"));
-    uint32_t mpl115a2t1_press_pa_val = gc_dev_adafruit_MPL115A2_press_pa_read();
-
-    Serial.print(F("[P] mpl115a2t1_press_pa value: "));
-    Serial.print(mpl115a2t1_press_pa_val);
-    Serial.println(F(" Pa"));
-
-    if(mpl115a2t1_press_pa_val < 0){
-        Serial.println(F("[P] \tError: mpl115a2t1 pressure out of range"));
-    }
+    gc_dev_adafruit_MPL115A2_press_pa_post();
 
     // Check apogee_sp212
-    Serial.println(F("[P] Check apogee_sp212 value"));
-    int apogee_sp212_val = gc_dev_apogee_SP212_solar_irr_read();
-
-    Serial.print(F("[P] apogee_sp212 solar irr value: "));
-    Serial.print(apogee_sp212_val);
-    Serial.println(F(" mV"));
-
-    if(apogee_sp212_val < 0){
-        Serial.println(F("[P] \tError: apogee solar irr out of range"));
-    }
+    gc_dev_apogee_SP212_solar_irr_post();
 
     // Check battery voltage
-    Serial.println(F("[P] Check batt value"));
-    uint16_t batt_val = gc_dev_batt_read();
-
-    Serial.print(F("[P] batt value: "));
-    Serial.print(batt_val);
-    Serial.println(F(" mV"));
-
-    if(batt_val < 0){
-        Serial.println(F("[P] \tError: batt out of range"));
-    }
+    gc_dev_batt_post();
 
     // check panel sensor value
-    Serial.println(F("[P] check panel sensor value"));
-
-    uint16_t spanel_val = gc_dev_spanel_read();
-    Serial.print(F("[P] spanel value: "));
-    Serial.print(spanel_val);
-    Serial.println(F(" mV"));
-
-    if(spanel_val < 100){
-        Serial.println(F("[P] \tERROR: spanel value out of range"));
-    }
+    gc_dev_spanel_post();
 
     Serial.println(F("POST End"));
 }
