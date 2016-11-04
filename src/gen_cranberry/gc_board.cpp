@@ -215,25 +215,25 @@ static void gc_board_run_cmd(struct gc_board* b){
                                     }
                                     switch(input2){
                                         case '1':
-                                            gc_dev_eeprom_naddr_post();
+                                            gc_dev_eeprom_naddr_test();
                                             break;
                                         case '2':
-                                            gc_dev_honeywell_HIH6131_temp_centik_post();
+                                            gc_dev_honeywell_HIH6131_temp_centik_test();
                                             break;
                                         case '3':
-                                            gc_dev_honeywell_HIH6131_humidity_pct_post();
+                                            gc_dev_honeywell_HIH6131_humidity_pct_test();
                                             break;
                                         case '4':
-                                            gc_dev_adafruit_MPL115A2_press_pa_post();
+                                            gc_dev_adafruit_MPL115A2_press_pa_test();
                                             break;
                                         case '5':
-                                            gc_dev_apogee_SP212_solar_irr_post();
+                                            gc_dev_apogee_SP212_solar_irr_test();
                                             break;
                                         case '6':
-                                            gc_dev_batt_post();
+                                            gc_dev_batt_test();
                                             break;
                                         case '7':
-                                            gc_dev_spanel_post();
+                                            gc_dev_spanel_test();
                                             break;
                                         default:
                                             break;
