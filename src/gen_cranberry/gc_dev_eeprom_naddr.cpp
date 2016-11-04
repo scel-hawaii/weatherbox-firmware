@@ -7,7 +7,7 @@ uint16_t gc_dev_eeprom_naddr_read(void){
     return node_addr;
 }
 
-void gc_dev_eeprom_naddr_post(void){
+void gc_dev_eeprom_naddr_test(void){
     Serial.print(F("[P] node addr: "));
     Serial.println((int) gc_dev_eeprom_naddr_read());
 }

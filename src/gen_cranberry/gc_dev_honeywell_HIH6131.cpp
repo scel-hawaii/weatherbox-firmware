@@ -30,7 +30,7 @@ uint16_t gc_dev_honeywell_HIH6131_humidity_pct_read(void){
     return value;
 }
 
-void gc_dev_honeywell_HIH6131_temp_centik_post(void){
+void gc_dev_honeywell_HIH6131_temp_centik_test(void){
     Serial.println(F("[P] Check hih6131_temp_centik value"));
     int hih6131_temp_centik_val = gc_dev_honeywell_HIH6131_temp_centik_read();
 
@@ -43,7 +43,7 @@ void gc_dev_honeywell_HIH6131_temp_centik_post(void){
     }
 }
 
-void gc_dev_honeywell_HIH6131_humidity_pct_post(void){
+void gc_dev_honeywell_HIH6131_humidity_pct_test(void){
     Serial.println(F("[P] Check hih6131_humidity value"));
     int hih6131_humidity_pct_val = gc_dev_honeywell_HIH6131_humidity_pct_read();
 

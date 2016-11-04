@@ -16,7 +16,7 @@ uint16_t gc_dev_apogee_SP212_solar_irr_read(void){
     return value;
 }
 
-void gc_dev_apogee_SP212_solar_irr_post(void){
+void gc_dev_apogee_SP212_solar_irr_test(void){
     Serial.println(F("[P] Check apogee_sp212 value"));
     int apogee_sp212_val = gc_dev_apogee_SP212_solar_irr_read();
 

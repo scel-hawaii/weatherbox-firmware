@@ -16,7 +16,7 @@ uint16_t gc_dev_spanel_read(void){
   return value;
 }
 
-void gc_dev_spanel_post(void){
+void gc_dev_spanel_test(void){
     Serial.println(F("[P] check panel sensor value"));
 
     uint16_t spanel_val = gc_dev_spanel_read();
