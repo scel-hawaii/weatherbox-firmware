@@ -1,10 +1,10 @@
 #include "gc_dev_xbee.h"
-#include "gc_dev_sp212.h"
 #include "gc_dev_batt.h"
 #include "gc_dev_spanel.h"
 #include "gc_dev_eeprom_naddr.h"
-#include "gc_dev_hih6131.h"
-#include "gc_dev_mpl115a2t1.h"
+#include "gc_dev_apogee_SP212.h"
+#include "gc_dev_honeywell_HIH6131.h"
+#include "gc_dev_adafruit_MPL115A2.h"
 
 #ifndef GC_BOARD_H
 #define GC_BOARD_H
@@ -18,7 +18,7 @@ struct gc_packet{
     uint16_t batt_mv;           // Battery Voltage (in milli volts)
     uint16_t panel_mv;          // Panel Voltage (in milli volts)
     uint16_t apogee_w_m2;
-    int16_t hih6131_temp_centik; // Temperature (Celsius)
+    uint16_t hih6131_temp_centik; // Temperature (Celsius)
     uint16_t hih6131_humidity_pct;  // Humidity (percentage)
     uint32_t mpl115a2t1_press_pa;  // Pressure (kPa)
 };
