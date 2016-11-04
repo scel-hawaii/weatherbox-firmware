@@ -5,5 +5,5 @@
 #define GC_DEV_SPANEL
 void gc_dev_spanel_open(void);
 uint16_t gc_dev_spanel_read(void);
-void gc_dev_spanel_post(void);
+void gc_dev_spanel_test(void);
 #endif

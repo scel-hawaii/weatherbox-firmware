@@ -86,25 +86,25 @@ static void gc_board_post(){
     Serial.println(F("POST Begin"));
 
     // Display node addr
-    gc_dev_eeprom_naddr_post();
+    gc_dev_eeprom_naddr_test();
 
     // Check hih6131 temperature
-    gc_dev_honeywell_HIH6131_temp_centik_post();
+    gc_dev_honeywell_HIH6131_temp_centik_test();
 
     // Check hih6131 humidity
-    gc_dev_honeywell_HIH6131_humidity_pct_post();
+    gc_dev_honeywell_HIH6131_humidity_pct_test();
 
     // Check mpl115a2t1 pressure
-    gc_dev_adafruit_MPL115A2_press_pa_post();
+    gc_dev_adafruit_MPL115A2_press_pa_test();
 
     // Check apogee_sp212
-    gc_dev_apogee_SP212_solar_irr_post();
+    gc_dev_apogee_SP212_solar_irr_test();
 
     // Check battery voltage
-    gc_dev_batt_post();
+    gc_dev_batt_test();
 
     // check panel sensor value
-    gc_dev_spanel_post();
+    gc_dev_spanel_test();
 
     Serial.println(F("POST End"));
 }
@@ -215,25 +215,25 @@ static void gc_board_run_cmd(struct gc_board* b){
                                     }
                                     switch(input2){
                                         case '1':
-                                            gc_dev_eeprom_naddr_post();
+                                            gc_dev_eeprom_naddr_test();
                                             break;
                                         case '2':
-                                            gc_dev_honeywell_HIH6131_temp_centik_post();
+                                            gc_dev_honeywell_HIH6131_temp_centik_test();
                                             break;
                                         case '3':
-                                            gc_dev_honeywell_HIH6131_humidity_pct_post();
+                                            gc_dev_honeywell_HIH6131_humidity_pct_test();
                                             break;
                                         case '4':
-                                            gc_dev_adafruit_MPL115A2_press_pa_post();
+                                            gc_dev_adafruit_MPL115A2_press_pa_test();
                                             break;
                                         case '5':
-                                            gc_dev_apogee_SP212_solar_irr_post();
+                                            gc_dev_apogee_SP212_solar_irr_test();
                                             break;
                                         case '6':
-                                            gc_dev_batt_post();
+                                            gc_dev_batt_test();
                                             break;
                                         case '7':
-                                            gc_dev_spanel_post();
+                                            gc_dev_spanel_test();
                                             break;
                                         default:
                                             break;

@@ -17,7 +17,7 @@ uint32_t gc_dev_adafruit_MPL115A2_press_pa_read(void){
     return value;
 }
 
-void gc_dev_adafruit_MPL115A2_press_pa_post(void){
+void gc_dev_adafruit_MPL115A2_press_pa_test(void){
     Serial.println(F("[P] Check mpl115a2t1_press_pa value"));
     uint32_t mpl115a2t1_press_pa_val = gc_dev_adafruit_MPL115A2_press_pa_read();
 
