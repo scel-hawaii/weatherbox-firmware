@@ -7,14 +7,20 @@ void gd_dev_xbee_open(void)
     // Enable voltage regulator pin to power the Xbee 
     digitalWrite(3, HIGH);
 
-    // Enable DTR pin as output
+    // Configure pin connected to DTR on XBee
+    // Since in router mode we don't care what the output is
+    // so we can drive this signal LOW by default
     pinMode(A1, OUTPUT);
     digitalWrite(A1, LOW);
 
-    // Set RSSI pin as input
+    // Configure pin connected to RSSI on XBee
+    // Since RSSI pin is set to output on XBee, set the RSSI pin to
+    // input on MCU
     pinMode(A2, INPUT);
 
-    // Set Xbee sleep pin as input
+    // Configure pin connected to XBee sleep pin on XBee
+    // Since the XBee sleep pin is set to output on XBee, set 
+    // the pin to input on MCU
     pinMode(A3, INPUT);
 }
 
