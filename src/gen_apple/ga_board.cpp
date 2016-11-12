@@ -16,6 +16,9 @@ static int ga_board_ready_tx(struct ga_board* b);
 static int ga_board_ready_heartbeat_tx(struct ga_board* b);
 static void ga_board_heartbeat_tx(struct ga_board* b);
 
+static int ga_board_ready_gps_tx(struct ga_board* b);
+static void ga_board_gps_tx(struct ga_board* b);
+
 void ga_board_init(ga_board *b){
     // Link functions to make them accessable
     b->print_build_opts = &ga_board_print_build_opts;
@@ -36,21 +39,16 @@ void ga_board_init(ga_board *b){
     b->ready_heartbeat_tx = &ga_board_ready_heartbeat_tx;
     b->heartbeat_tx = &ga_board_heartbeat_tx;
 
+    //GPS Module
+    b->ready_gps_tx = &ga_board_ready_gps_tx;
+    b->gps_tx = &ga_board_gps_tx;
+
     // State Variables
-    b->sample_count = 0;
+    //b->sample_count = 0;
     b->node_addr = 0;
     b->prev_sample_ms = 0;
 
-    // Initialize the packet
-    b->data_packet.schema = 1;
-    b->data_packet.node_addr = 0;
-    b->data_packet.uptime_ms = 0;
-    b->data_packet.batt_mv = 0;
-    b->data_packet.panel_mv = 0;
-    b->data_packet.bmp085_press_pa = 0;
-    b->data_packet.bmp085_temp_decic = 0;
-    b->data_packet.humidity_centi_pct = 0;
-    b->data_packet.apogee_w_m2 = 0;
+
 }
 
 static void ga_board_print_build_opts()
@@ -72,6 +70,7 @@ static void ga_board_setup(struct ga_board* b){
     ga_dev_batt_open();
     ga_dev_spanel_open();
     ga_dev_eeprom_naddr_open();
+    ga_dev_gps_open();
 
     // load the address from the EEPROM into memory
     b->node_addr = ga_dev_eeprom_naddr_read();
@@ -92,7 +91,7 @@ static void ga_board_post(){
     int sht1x_val = ga_dev_sht1x_read();
     Serial.print(F("[P] sht1x value: "));
     Serial.print(sht1x_val);
-    Serial.println("\%");
+    Serial.println(F("\%"));
 
     if(sht1x_val < 0){
         Serial.println(F("[P] \tError: Humidity out of range"));
@@ -104,7 +103,7 @@ static void ga_board_post(){
     Serial.print(bmp085_val/100);
     Serial.print(F("."));
     Serial.print((bmp085_val-bmp085_val/10)/1000);
-    Serial.println(" mb");
+    Serial.println(F(" mb"));
 
     if(bmp085_val < 80000){
         Serial.println(F("[P] \tError: bmp085 pressure out of range"));
@@ -114,7 +113,7 @@ static void ga_board_post(){
     uint16_t bmp085_temp = ga_dev_bmp085_read_temp();
     Serial.print(F("[P] bmp085 temp: "));
     Serial.print(bmp085_temp/10);
-    Serial.print(".");
+    Serial.print(F("."));
     Serial.print((bmp085_temp-bmp085_temp/10)/10);
     Serial.println(F(" celsius"));
 
@@ -126,7 +125,7 @@ static void ga_board_post(){
     int apogee_sp212_val = ga_dev_apogee_sp212_read();
     Serial.print(F("[P] apogee_sp212 solar irr value: "));
     Serial.print(apogee_sp212_val);
-    Serial.println(" mV");
+    Serial.println(F(" mV"));
 
     if(apogee_sp212_val < 0){
         Serial.println(F("[P] \tError: apogee solar irr out of range"));
@@ -136,7 +135,7 @@ static void ga_board_post(){
     int batt_val = ga_dev_batt_read();
     Serial.print(F("[P] batt value: "));
     Serial.print(batt_val);
-    Serial.println(" mV");
+    Serial.println(F(" mV"));
 
     if(batt_val < 0){
         Serial.println(F("[P] \tError: batt out of range"));
@@ -152,19 +151,57 @@ static void ga_board_post(){
         Serial.println(F("[P] \tERROR: spanel value out of range"));
     }
 
-    Serial.println(F("POST End"));
+    while(_GPS_POST_TEST){
+      if(ga_dev_gps_ready()){
+        float gps_altitude = ga_dev_gps_altitude();
+        float gps_latitude  = ga_dev_gps_latitude();
+        float gps_longitude = ga_dev_gps_longitude();
 
+        Serial.print(F("[P] latitude value: "));
+        Serial.println(gps_latitude);
+        Serial.println(F("deg, mins"));
+
+        Serial.print(F("[P] longitude value: "));
+        Serial.println(gps_longitude);
+        Serial.println(F("deg, mins"));
+
+        Serial.print(F("[P] altitude value: "));
+        Serial.println(gps_altitude);
+        Serial.println(F("m"));
+
+        if(gps_longitude > 18060.100 || gps_longitude < -18060.100){
+          Serial.println(F("[P] \tERROR: longitude value out of range"));
+        }
+
+        if(gps_latitude > 9060.100 || gps_latitude < -9060.100){
+          Serial.println(F("[P] \tERROR: latitude value out of range"));
+        }
+
+        if(gps_altitude > 3000 || gps_altitude < -3000){
+          Serial.println(F("[P] \tERROR: altitude value out of range"));
+        }
+
+        break;
+      }
+
+      //Serial.println(F("No GPS"));
+
+    }
+
+    ga_dev_gps_low();
+    Serial.println(F("POST End"));
 }
 
 static void ga_board_sample(struct ga_board* b){
-    Serial.print("[");
+    Serial.print(F("["));
     Serial.print(millis());
-    Serial.print("] ");
+    Serial.print(F("] "));
     Serial.println(F("Sample Start"));
     // Disabled this for apple deployment on 2016-10-06 with T=30s
     // Serial.println(b->sample_count);
 
     struct ga_packet* data_packet = &(b->data_packet);
+    data_packet->schema              = 1;
     data_packet->uptime_ms           = millis();
     data_packet->batt_mv             = ga_dev_batt_read();
     data_packet->panel_mv            = ga_dev_spanel_read();
@@ -289,13 +326,14 @@ static void ga_board_heartbeat_tx(struct ga_board* b){
     // data bytes.
     memset(payload, '\0', sizeof(payload));
     memcpy(payload, &(hb_packet), schema_len);
-    ga_dev_xbee_write(payload, schema_len);
+    ga_dev_xbee_send(payload, schema_len);
 
     Serial.println(F("TX Heartbeat End"));
 }
 
 static void ga_board_tx(struct ga_board* b){
     uint8_t payload[_GA_DEV_XBEE_BUFSIZE_];
+
     int schema_len = sizeof(b->data_packet);
 
     Serial.println(F("Sample TX Start"));
@@ -306,13 +344,59 @@ static void ga_board_tx(struct ga_board* b){
     // data bytes.
     memset(payload, '\0', sizeof(payload));
     memcpy(payload, &(b->data_packet), schema_len);
-    ga_dev_xbee_write(payload, schema_len);
+    ga_dev_xbee_send(payload, schema_len);
 
     // Reset the board sample count so that
     // goes through the sample loop again.
-    b->sample_count = 0;
+    //b->sample_count = 0;
 
     Serial.println(F("Sample TX End"));
+}
+
+static int ga_board_ready_gps_tx(struct ga_board* b){
+  const unsigned long wait_ms = (unsigned long) 1000*60*60*24; //24 hours
+  const unsigned long sample_delta = millis() - b->prev_gps_ms;
+
+  if(sample_delta >= (wait_ms - ((unsigned long) 1000 * 60 * 5))) {
+    ga_dev_gps_high();
+  }
+
+  if( sample_delta >= wait_ms){
+    if(ga_dev_gps_ready()){
+      b->prev_gps_ms = millis();
+      return 1;
+    }
+  }
+  else{
+      return 0;
+  }
+  return 0;
+}
+
+static void ga_board_gps_tx(struct ga_board* b){
+  uint8_t payload[_GA_DEV_XBEE_BUFSIZE_];
+  struct ga_gps_packet gps_packet;
+
+  gps_packet.schema = 5;
+  gps_packet.uptime_ms = millis();
+  gps_packet.node_addr = ga_dev_eeprom_naddr_read();
+  gps_packet.latitude = ga_dev_gps_latitude();
+  gps_packet.longitude = ga_dev_gps_longitude();
+  gps_packet.altitude = ga_dev_gps_altitude();
+
+  int schema_len = sizeof(gps_packet);
+
+  Serial.println(F("TX GPS Start"));
+
+  // We need to copy our struct data over to a byte array
+  // to get a consistent size for sending over xbee.
+  // Raw structs have alignment bytes that are in-between the
+  // data bytes.
+  memset(payload, '\0', sizeof(payload));
+  memcpy(payload, &(gps_packet), schema_len);
+  ga_dev_xbee_send(payload, schema_len);
+  ga_dev_gps_low();
+  Serial.println(F("TX GPS End"));
 }
 
 static void ga_board_soft_rst(){
