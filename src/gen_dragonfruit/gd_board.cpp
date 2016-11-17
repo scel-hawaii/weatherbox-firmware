@@ -8,12 +8,12 @@ static void gd_board_run_cmd(struct gd_board* b);
 static int gd_board_ready_run_cmd(struct gd_board* b);
 
 static void gd_board_sample(struct gd_board* b);
-static int gd_board_ready_sample(struct gd_board* b);
+//static int gd_board_ready_sample(struct gd_board* b);
 
 static void gd_board_tx(struct gd_board* b);
 static int gd_board_ready_tx(struct gd_board* b);
 
-static int gd_board_ready_heartbeat_tx(struct gd_board* b);
+//static int gd_board_ready_heartbeat_tx(struct gd_board* b);
 static void gd_board_heartbeat_tx(struct gd_board* b);
 
 void gd_board_init(gd_board *b){
@@ -26,24 +26,26 @@ void gd_board_init(gd_board *b){
     b->tx = &gd_board_tx;
     b->ready_tx = &gd_board_ready_tx;
     b->sample = &gd_board_sample;
-    b->ready_sample = &gd_board_ready_sample;
+    //b->ready_sample = &gd_board_ready_sample;
 
     // CMD Parsing Module
     b->run_cmd = &gd_board_run_cmd;
     b->ready_run_cmd = &gd_board_ready_run_cmd;
 
     // Heartbeat Module
-    b->ready_heartbeat_tx = &gd_board_ready_heartbeat_tx;
+    //b->ready_heartbeat_tx = &gd_board_ready_heartbeat_tx;
     b->heartbeat_tx = &gd_board_heartbeat_tx;
 
     // State Variables
-    b->sample_count = 0;
+    //b->sample_count = 0;
     b->node_addr = 0;
     b->prev_sample_ms = 0;
+    //b->sample_cycle=0;
+    //b->heartbeat_cycle=0;
 
     // Initialize the packet
     b->data_packet.schema = 3;
-    b->data_packet.node_addr = gd_dev_eeprom_naddr_read();
+    b->data_packet.node_addr = 0;
     b->data_packet.uptime_ms = 0;
     b->data_packet.batt_mv = 0;
     b->data_packet.panel_mv = 0;
@@ -107,7 +109,7 @@ static void gd_board_post(){
     Serial.print(F("[P] mpl115a2 temp: "));
     Serial.print(mpl115a2_temp_val);
     Serial.println(F(" cK"));
-    
+
     if(mpl115a2_temp_val < 0){
         Serial.println(F("[P] \tError: mpl115a2 temp out of range"));
     }
@@ -174,7 +176,7 @@ static void gd_board_sample(struct gd_board* b){
     data_packet->apogee_sp215        = gd_dev_apogee_sp215_read();
 
     Serial.println(F("Sample End"));
-    b->sample_count = 0;
+    //b->sample_count = 0;
 
     // Disabled this for dragonfruit deployment on 2016-10-20 with T=30s
     // b->sample_count++;
@@ -195,18 +197,18 @@ static int gd_board_ready_tx(struct gd_board* b){
     return 0;
 }
 
-static int gd_board_ready_sample(struct gd_board* b){
+/*static int gd_board_ready_sample(struct gd_board* b){
     const unsigned long wait_ms = 1000*30;
-    const unsigned long sample_delta = millis() - b->prev_sample_ms;
+    //const unsigned long sample_delta = millis() - b->prev_sample_ms;
 
     if( sample_delta >= wait_ms){
-        b->prev_sample_ms = millis();
+        //b->prev_sample_ms = millis();
         return 1;
     }
     else{
         return 0;
     }
-}
+}*/
 
 static int gd_board_ready_run_cmd(struct gd_board* b){
     return Serial.available();
@@ -241,23 +243,23 @@ static void gd_board_run_cmd(struct gd_board* b){
     }
 }
 
-static int gd_board_ready_heartbeat_tx(struct gd_board* b){
+/*static int gd_board_ready_heartbeat_tx(struct gd_board* b){
     const int wait_ms = 3000;
-    int sample_delta = millis() - b->prev_heartbeat_ms;
+    //int sample_delta = millis() - b->prev_heartbeat_ms;
 
     unsigned long max_heartbeat_ms = (unsigned long) 1000*69*5;
 
     int heartbeat_enable = 1;
 
     #ifndef HB_FOREVER
-    heartbeat_enable = millis() < max_heartbeat_ms;
+    //heartbeat_enable = millis() < max_heartbeat_ms;
     #endif
 
     // Heartbeats are only enabled for 5 minutes after the
     // device boots up.
     if( heartbeat_enable ){
         if( sample_delta >= wait_ms){
-            b->prev_heartbeat_ms = millis();
+            //b->prev_heartbeat_ms = millis();
             return 1;
         }
         else{
@@ -265,14 +267,14 @@ static int gd_board_ready_heartbeat_tx(struct gd_board* b){
         }
     }
     return 0;
-}
+}*/
 
 static void gd_board_heartbeat_tx(struct gd_board* b){
     uint8_t payload[_GD_DEV_XBEE_BUFSIZE_];
     struct gd_heartbeat_packet hb_packet;
 
     hb_packet.schema = 0;
-    hb_packet.uptime_ms = millis();
+    //hb_packet.uptime_ms = millis();
     hb_packet.batt_mv = gd_dev_batt_read();
     hb_packet.node_addr = gd_dev_eeprom_naddr_read();
 
@@ -307,7 +309,7 @@ static void gd_board_tx(struct gd_board* b){
 
     // Reset the board sample count so that
     // goes through the sample loop agdin.
-    b->sample_count = 0;
+    //b->sample_count = 0;
 
     Serial.println(F("Sample TX End"));
 }

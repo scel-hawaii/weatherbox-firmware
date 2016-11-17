@@ -7,6 +7,7 @@
 #include "gd_dev_adafruit_MPL115A2_temp.h"
 #include "gd_dev_adafruit_MPL115A2_press.h"
 #include <Arduino.h>
+#include <avr/sleep.h>
 
 #define _PIN_SEN_EN_ 4
 
@@ -52,6 +53,7 @@ struct gd_board{
     int sample_count;
     uint16_t node_addr;
     struct gd_packet data_packet;
+    uint32_t cycle_count;
 };
 
 
