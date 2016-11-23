@@ -1,12 +1,6 @@
 all: init base-model
 
 init:
-	rm -rf v1.3.tar.gz
-	wget https://github.com/buserror/simavr/archive/v1.3.tar.gz
-	tar xvf v1.3.tar.gz
-	rm v1.3.tar.gz
-	mv simavr-1.3 simavr
-
 	# Arch linux requires a small patch because it comes with a newer version of GCC.
 	# See issue below for info:
 	# 	https://github.com/buserror/simavr/issues/131
@@ -24,5 +18,4 @@ install-pkgs-debian:
 
 clean:
 	rm -rf simavr simavr-1.3 v1.3.tar.gz
-
 
