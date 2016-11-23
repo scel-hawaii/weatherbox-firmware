@@ -9,6 +9,9 @@ init:
 
 	cd simavr && make
 
+	# Reset the mcu_section.h file to get rid of git warnings
+	git checkout simavr/simavr/sim/avr/avr_mcu_section.h
+
 base-model:
 	cd emu_base_model && make
 
