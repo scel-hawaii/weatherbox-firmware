@@ -39,6 +39,8 @@ print "Running emulator with build: " + firmware_build
 bm_proc= Process(target=run_base_model)
 bm_proc.start()
 
+# Wait for the base model to come online, otherwise there
+# will be nothing to upload to
 time.sleep(2)
 
 upload_proc = Process(target=upload, args=(build_dir,))
