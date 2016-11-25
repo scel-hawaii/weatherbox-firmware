@@ -1,0 +1,93 @@
+<html>
+  <head>
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <h1>SCEL Weatherbox Emulator </h1>
+    <div>
+      <p>
+      Emulator State:
+      <strong><span id="emu_state"></span></strong>
+      </p>
+
+      <p>
+      <button id="btn-start"> Start </button>
+      <button> Pause </button>
+      <button id="btn-stop"> Stop </button>
+      <button> Restart </button>
+      <button id="btn-clear-txt"> Clear Text </button>
+      </p>
+
+
+      <div id="data-container" style="overflow-y: scroll; height:400px; width:600px; border: 2px solid black;">
+        <pre id="data"> </pre>
+      </div>
+
+    </div>
+  </body>
+  <script>
+    var current_length = 0;
+    var prev_length = 0;
+    var tail_ptr = 0;
+
+    $(document).ready(function(){
+      setInterval(function(){
+        $.get("/file_length", function(result){
+          // Get the total number of lines in the file
+          current_length = result;
+
+          // Calculate the number of lines to run tail with
+          // Current number of lines - the previous number of lines
+          tail_ptr = current_length - prev_length;
+
+          // Only grab new lines if there are new lines
+          if(tail_ptr != 0){
+
+            // Run Tail
+            $.get("/tail", { tail_ptr: tail_ptr }, function(result){
+              $("#data").append(result);
+              prev_length = current_length;
+
+              document.getElementById("data-container").scrollTop = document.getElementById("data-container").scrollHeight;
+            });
+          }
+
+          // Refresh the buffer in DOM if the file is cleared or some
+          // got deleted
+          if(tail_ptr < 0 ){
+            tail_ptr = current_length - 0;
+            // Run Tail
+            $.get("/tail", { tail_ptr: tail_ptr }, function(result){
+              $("#data").text(result);
+              prev_length = current_length;
+
+              document.getElementById("data-container").scrollTop = document.getElementById("data-container").scrollHeight;
+            });
+          }
+
+
+        });
+      }, 500);
+
+      setInterval(function(){
+        $.get("/state", function(result){
+          $("#emu_state").text(result);
+        });
+      }, 500);
+
+      $('#btn-start').on("click", function(){
+        $.get("/control/start");
+      });
+
+      $('#btn-stop').on("click", function(){
+        $.get("/control/stop");
+      });
+
+      $('#btn-clear-txt').on("click", function(){
+        $.get("/control/clear");
+      });
+
+    });
+
+  </script>
+</html>
