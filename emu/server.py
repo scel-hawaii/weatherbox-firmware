@@ -67,7 +67,7 @@ def stop():
 
 @app.route("/control/clear")
 def clear_txt():
-    call(["cat /dev/null > test.txt"], shell=True)
+    call(["cat /dev/null > emu_output.txt"], shell=True)
 
     return "clear"
 
