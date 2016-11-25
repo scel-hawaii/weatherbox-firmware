@@ -72,4 +72,4 @@ def clear_txt():
     return "clear"
 
 
-app.run()
+app.run(debug=True)
