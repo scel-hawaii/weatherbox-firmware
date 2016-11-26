@@ -10,11 +10,11 @@ import datetime
 
 # Run the emu background
 def run_base_model():
-    cmd = "pwd"
-    call([cmd])
-
-    cmd = "./run_emu.sh"
-    call([cmd])
+    # To run the base model you just need to
+    # provide the path for the .elf executable and an .ihex file to
+    # load the bootloader
+    cmd = "emu_base_model/obj-*/emu_base_model.elf emu_base_model/*.ihex"
+    call([cmd], shell=True)
 
 def upload(build_dir):
     cmd = "cd " + build_dir + " && avrdude -p m328p -c arduino -P /tmp/simavr-uart0 -U flash:w:firmware.hex"
