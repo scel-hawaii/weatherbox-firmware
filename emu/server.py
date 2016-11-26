@@ -28,7 +28,6 @@ def index():
 @app.route("/file_length")
 def file_length():
     length = subprocess.Popen("wc -l < emu_output.txt", shell=True, stdout=subprocess.PIPE).stdout.read()
-    print length
     return length
 
 # This route grabs new data that is written to the logfile
