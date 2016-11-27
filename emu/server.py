@@ -43,8 +43,10 @@ def state():
 def start():
     global emu_proc
     global emu_state
+    firmware_build = request.args.get("firmware_build")
 
-    emu_proc = Popen(["python2 run_emu.py ga_stub"], shell=True)
+    cmd = "python2 run_emu.py {fw}".format(fw=firmware_build)
+    emu_proc = Popen([cmd], shell=True)
 
     emu_state = "RUNNING"
     return "start"

@@ -21,7 +21,7 @@
 
       <strong>Firmware Build:</strong>
 
-			<select>
+			<select id="sel-firmware-build">
 				<option value="ga_stub">ga_stub</option>
 				<option value="gc_stub">gc_stub</option>
 				<option value="gd_stub">gd_stub</option>
@@ -109,7 +109,8 @@
       }, 500);
 
       $('#btn-start').on("click", function(){
-        $.get("/control/start");
+        var firmware_build = $("#sel-firmware-build").val();
+        $.get("/control/start", {firmware_build: firmware_build});
       });
 
       $('#btn-stop').on("click", function(){
