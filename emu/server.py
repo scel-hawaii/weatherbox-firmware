@@ -6,6 +6,7 @@ from subprocess import call
 app = Flask(__name__)
 import subprocess
 import os
+import signal
 
 prev_count = 0;
 current_count = 0;
@@ -14,9 +15,6 @@ emu_state = "STOPPED"
 
 emu_proc = 0;
 
-
-def run_emu():
-    call(["stdbuf -oL python2 run_emu.py ga_stub &> emu_output.txt"], shell=True)
 
 @app.route("/")
 def index():
@@ -45,8 +43,7 @@ def start():
     global emu_proc
     global emu_state
 
-    emu_proc = Process(target=run_emu)
-    emu_proc.start()
+    emu_proc = subprocess.Popen(["python2 run_emu.py ga_stub"], shell=True)
 
     emu_state = "RUNNING"
     return "start"
@@ -56,9 +53,10 @@ def stop():
     global emu_proc
     global emu_state
 
+    print "terminating emulator proc"
     emu_proc.terminate()
-    emu_state = "STOPPED"
 
+    emu_state = "STOPPED"
     return "stop"
 
 @app.route("/control/clear")
