@@ -14,9 +14,6 @@ emu_state = "STOPPED"
 
 emu_proc = 0;
 
-if( not os.path.exists("emu_output.txt")):
-    print "emu_output.txt does not exist"
-    call(["touch emu_output.txt"], shell=True)
 
 def run_emu():
     call(["stdbuf -oL python2 run_emu.py ga_stub &> emu_output.txt"], shell=True)

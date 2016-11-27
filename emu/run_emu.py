@@ -24,6 +24,10 @@ if os.path.isdir(build_dir) == False:
 if os.path.isfile(build_dir + "/firmware.hex") == False:
     sys.exit("Error, firmware file does not exist. Maybe try compiling? " + firmware_build)
 
+if( not os.path.exists("emu_output.txt")):
+    print "emu_output.txt does not exist"
+    call(["touch emu_output.txt"], shell=True)
+
 #
 # Main execution
 #
