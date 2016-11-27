@@ -28,6 +28,10 @@ if( not os.path.exists("emu_output.txt")):
     print "emu_output.txt does not exist"
     call(["touch emu_output.txt"], shell=True)
 
+if( os.path.exists("emu_online.txt")):
+    call(["rm emu_online.txt"], shell=True)
+
+
 #
 # Main execution
 #
@@ -37,8 +41,13 @@ print "Running emulator with build: " + firmware_build
 launch_emu_cmd = "emu_base_model/obj-*/emu_base_model.elf emu_base_model/*.ihex"
 emu_proc = Popen([launch_emu_cmd], shell=True)
 
-# Sleep to give some time for the emulator model to come online
-time.sleep(2)
+# Block and wait for the emulator model to come online
+# otherwise we don't be able to upload
+#
+# The base emulator model writes to emu_online.txt when
+# it is online.
+while( not os.path.exists("emu_online.txt") ):
+    time.sleep(0.01)
 
 print "Running upload command"
 
