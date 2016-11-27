@@ -3,6 +3,7 @@ from flask import request
 from flask import render_template
 from multiprocessing import Process
 from subprocess import call
+from subprocess import Popen
 app = Flask(__name__)
 import subprocess
 import os
@@ -22,14 +23,14 @@ def index():
 
 @app.route("/file_length")
 def file_length():
-    length = subprocess.Popen("wc -l < emu_output.txt", shell=True, stdout=subprocess.PIPE).stdout.read()
+    length = Popen("wc -l < emu_output.txt", shell=True, stdout=subprocess.PIPE).stdout.read()
     return length
 
 # This route grabs new data that is written to the logfile
 @app.route("/tail")
 def tail():
     tail_ptr = request.args.get("tail_ptr")
-    output = subprocess.Popen("tail emu_output.txt -n " + str(tail_ptr), shell=True, stdout=subprocess.PIPE).stdout.read()
+    output = Popen("tail emu_output.txt -n " + str(tail_ptr), shell=True, stdout=subprocess.PIPE).stdout.read()
     return output
 
 @app.route("/state")
@@ -43,7 +44,7 @@ def start():
     global emu_proc
     global emu_state
 
-    emu_proc = subprocess.Popen(["python2 run_emu.py ga_stub"], shell=True)
+    emu_proc = Popen(["python2 run_emu.py ga_stub"], shell=True)
 
     emu_state = "RUNNING"
     return "start"
