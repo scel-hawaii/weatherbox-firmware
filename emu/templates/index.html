@@ -8,6 +8,8 @@
       <p>
       Emulator State:
       <strong><span id="emu_state"></span></strong>
+      | Server Status:
+      <strong><span id="server_status"></span></strong>
       </p>
 
       <p>
@@ -102,6 +104,7 @@
       socket.on('connect', function() {
           // socket.emit('message', {data: 'I\'m connected!'});
           console.log("Connected to websocket server");
+				$("#server_status").text("Online");
       });
       socket.on('message', function(result) {
         // console.log(result);
@@ -110,6 +113,10 @@
           document.getElementById("data-container").scrollTop = document.getElementById("data-container").scrollHeight;
         }
       });
+			socket.on('disconnect', function () {
+				$("#server_status").text("Offline");
+			});
+
 
   </script>
 
