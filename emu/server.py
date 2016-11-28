@@ -45,7 +45,15 @@ def start():
     global emu_state
     firmware_build = request.args.get("firmware_build")
 
-    cmd = "python2 run_emu.py {fw}".format(fw=firmware_build)
+
+    # For some reason on debian, running the Popen with shell=True
+    # spawns a sh/ process that then runs the given command. It doesn't do
+    # this in Arch. So when we attempt to terminate the emulator model process
+    # doesn't terminate properly.
+    #
+    # So running exec (which will replace the current running process) will
+    # maintain compatability with debian.
+    cmd = "exec python2 run_emu.py {fw}".format(fw=firmware_build)
     emu_proc = Popen([cmd], shell=True)
 
     emu_state = "RUNNING"
