@@ -1,13 +1,23 @@
 from flask import Flask
 from flask import request
 from flask import render_template
+from flask_socketio import SocketIO
+
 from multiprocessing import Process
 from subprocess import call
 from subprocess import Popen
-app = Flask(__name__)
 import subprocess
 import os
 import signal
+import time
+import eventlet
+
+from threading import Thread
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'secret!'
+socketio = SocketIO(app)
+
 
 prev_count = 0;
 current_count = 0;
@@ -16,6 +26,10 @@ emu_state = "STOPPED"
 
 emu_proc = 0;
 
+
+#
+# Normal WSGI routes
+#
 
 @app.route("/")
 def index():
@@ -77,4 +91,25 @@ def clear_txt():
     return "clear"
 
 
-app.run(debug=True)
+#
+# Websocket Interface
+#
+
+
+@socketio.on('connect')
+def handle_connect():
+    socketio.send("Hello, client!")
+
+def background_emit():
+    global socketio
+    global app
+
+    eventlet.sleep(1)
+    while True:
+        socketio.emit("message", {'data': 42}, broadcast=True)
+        print "Emitting message"
+        eventlet.sleep(1)
+
+eventlet.spawn(background_emit)
+socketio.run(app)
+
