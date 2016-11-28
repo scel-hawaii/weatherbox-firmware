@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import request
 from flask import render_template
+from flask import send_from_directory
 from flask_socketio import SocketIO
 
 from multiprocessing import Process
@@ -41,6 +42,11 @@ emu_proc = Popen(["date"], shell=True);
 @app.route("/")
 def index():
     return render_template('index.html')
+
+@app.route('/assets/<path:path>')
+def send_js(path):
+        return send_from_directory('assets', path)
+
 
 @app.route("/stdout/length")
 def file_length():
