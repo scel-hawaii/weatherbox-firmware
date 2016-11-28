@@ -66,7 +66,7 @@
 
     $(document).ready(function(){
       setInterval(function(){
-        $.get("/file_length", function(result){
+        $.get("/stdout/length", function(result){
           // Get the total number of lines in the file
           current_length = result;
 
@@ -78,7 +78,7 @@
           if(tail_ptr != 0){
 
             // Run Tail
-            $.get("/tail", { tail_ptr: tail_ptr }, function(result){
+            $.get("/stdout", { tail_ptr: tail_ptr }, function(result){
               $("#data").append(result);
               prev_length = current_length;
 
@@ -93,7 +93,7 @@
           if(tail_ptr < 0 ){
             tail_ptr = current_length - 0;
             // Run Tail
-            $.get("/tail", { tail_ptr: tail_ptr }, function(result){
+            $.get("/stdout", { tail_ptr: tail_ptr }, function(result){
               $("#data").text(result);
               prev_length = current_length;
 
@@ -108,7 +108,7 @@
       }, 500);
 
       setInterval(function(){
-        $.get("/state", function(result){
+        $.get("/control/state", function(result){
           $("#emu_state").text(result);
         });
       }, 500);

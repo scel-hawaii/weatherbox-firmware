@@ -21,19 +21,19 @@ emu_proc = 0;
 def index():
     return render_template('index.html')
 
-@app.route("/file_length")
+@app.route("/stdout/length")
 def file_length():
     length = Popen("wc -l < emu_output.txt", shell=True, stdout=subprocess.PIPE).stdout.read()
     return length
 
 # This route grabs new data that is written to the logfile
-@app.route("/tail")
+@app.route("/stdout")
 def tail():
     tail_ptr = request.args.get("tail_ptr")
     output = Popen("tail emu_output.txt -n " + str(tail_ptr), shell=True, stdout=subprocess.PIPE).stdout.read()
     return output
 
-@app.route("/state")
+@app.route("/control/state")
 def state():
     global emu_state
 
