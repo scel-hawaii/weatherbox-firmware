@@ -24,8 +24,12 @@ current_count = 0;
 max_length = 0;
 emu_state = "STOPPED"
 
-emu_proc = 0;
-
+# Initialize the process object with a dummy program
+# so that it's easy for us to check if the previous process
+# is still running or not.
+#
+# TODO: there might be a better way to do this
+emu_proc = Popen(["date"], shell=True);
 
 #
 # Normal WSGI routes
@@ -60,18 +64,23 @@ def start():
     firmware_build = request.args.get("firmware_build")
 
 
-    # For some reason on debian, running the Popen with shell=True
-    # spawns a sh/ process that then runs the given command. It doesn't do
-    # this in Arch. So when we attempt to terminate the emulator model process
-    # doesn't terminate properly.
-    #
-    # So running exec (which will replace the current running process) will
-    # maintain compatability with debian.
-    cmd = "exec python2 run_emu.py {fw}".format(fw=firmware_build)
-    emu_proc = Popen([cmd], shell=True)
+    if( emu_proc.poll() == None ):
+        print "Process still running"
+        # Return the request so that the client knows
+        return "Process still running"
+    else:
+        # For some reason on debian, running the Popen with shell=True
+        # spawns a sh/ process that then runs the given command. It doesn't do
+        # this in Arch. So when we attempt to terminate the emulator model process
+        # doesn't terminate properly.
+        #
+        # So running exec (which will replace the current running process) will
+        # maintain compatability with debian.
+        cmd = "exec python2 run_emu.py {fw}".format(fw=firmware_build)
+        emu_proc = Popen([cmd], shell=True)
 
     emu_state = "RUNNING"
-    return "start"
+    return "Process started"
 
 @app.route("/control/stop")
 def stop():
