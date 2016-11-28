@@ -6,6 +6,7 @@ from flask_socketio import SocketIO
 from multiprocessing import Process
 from subprocess import call
 from subprocess import Popen
+from subprocess import PIPE
 import subprocess
 import os
 import signal
@@ -13,6 +14,8 @@ import time
 import eventlet
 
 from threading import Thread
+
+eventlet.monkey_patch()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -113,12 +116,15 @@ def background_emit():
     global socketio
     global app
 
-    eventlet.sleep(1)
-    while True:
-        socketio.emit("message", {'data': 42}, broadcast=True)
-        print "Emitting message"
-        eventlet.sleep(1)
+    output = Popen("tail -F emu_output.txt", shell=True, stdout=PIPE)
 
-eventlet.spawn(background_emit)
+    time.sleep(1)
+    while True:
+        bufsize = 4
+        d = output.stdout.read(bufsize)
+        socketio.emit("message", {'data': d}, broadcast=True)
+
+t = Thread(target=background_emit).start()
+# eventlet.spawn(background_emit)
 socketio.run(app)
 
