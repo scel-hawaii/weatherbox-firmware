@@ -1,3 +1,15 @@
+#
+#
+#    server.py
+#
+#    Original Author(s): Kenny Luong <luong97@hawaii.edu>
+#    Date Created: 2016/11/25
+#
+#    This is a basic HTTP and websocket server that provides a
+#    browser-based client an api to control a simple simavr-based
+#    emulator process.
+#
+
 from flask import Flask
 from flask import request
 from flask import render_template
@@ -16,6 +28,12 @@ import eventlet
 
 from threading import Thread
 
+# Since we're using eventlet for our websocket server, the normal
+# threading library will not work; we can however use the provided
+# monkey patching function to make it compatable
+#
+# More info available here:
+# http://eventlet.net/doc/patching.html
 eventlet.monkey_patch()
 
 app = Flask(__name__)
@@ -72,7 +90,6 @@ def start():
     global emu_state
     firmware_build = request.args.get("firmware_build")
 
-
     if( emu_proc.poll() == None ):
         print "Process still running"
         # Return the request so that the client knows
@@ -113,7 +130,6 @@ def clear_txt():
 # Websocket Interface
 #
 
-
 @socketio.on('connect')
 def handle_connect():
     socketio.send("Hello, client!")
@@ -130,7 +146,11 @@ def background_emit():
         d = output.stdout.read(bufsize)
         socketio.emit("message", {'data': d}, broadcast=True)
 
+
+#
+# Execute server
+#
+
 t = Thread(target=background_emit).start()
-# eventlet.spawn(background_emit)
 socketio.run(app)
 
