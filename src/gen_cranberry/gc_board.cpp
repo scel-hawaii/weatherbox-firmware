@@ -40,6 +40,7 @@ void gc_board_init(gc_board *b){
     b->sample_count = 0;
     b->node_addr = 0;
     b->prev_sample_ms = 0;
+    b->cycle_count = 0;
 
     // Initialize the packet
     b->data_packet.schema = 2;

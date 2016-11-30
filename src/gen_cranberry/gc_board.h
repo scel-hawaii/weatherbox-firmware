@@ -49,6 +49,7 @@ struct gc_board{
     int sample_count;
     uint16_t node_addr;
     struct gc_packet data_packet;
+    uint32_t cycle_count;
 };
 
 void gc_board_init(struct gc_board*);

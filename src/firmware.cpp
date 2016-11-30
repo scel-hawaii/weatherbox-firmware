@@ -90,6 +90,8 @@ void setup(){
        Bits 6-7: Disconnect output compare pin from timer
        Bits 2-5: Unused
        Bits 0-1: Disable PWM
+
+       Cranberry: clock frequency 8MHz
     */
     TCCR1A = 0x00;
 
@@ -98,7 +100,11 @@ void setup(){
        Dragonfruit: Prescalar=256, so each clock cycle takes (1/16MHz)*256 secs.
        So, 1 second will elapse after 16*10^6/256 clock cycles have elapsed.
        16-bit timer so clock will overflow after 2^16 clock cycles
-       So, we need to preload timer with value = 2^16 - 16*10^6/256
+       So, we need to preload timer with value = 2^16 - 16*10^6/256 = 0x0BDC
+       Cranberry: Prescalar=256, so each clock cycle takes (1/8MHz)*256 secs.
+       So, 1 second will elapse after 8*10^6/256 clock cycles have elapsed.
+       16-bit timer so clock will overflow after 2^16 clock cycles
+       So, we need to preload timer with value = 2^16 - 8*10^6/256 = 0x085EE
     */
     TCNT1=0x0BDC;
 
@@ -133,8 +139,7 @@ void loop(){
     if(board.ready_run_cmd(&board))      board.run_cmd(&board);
     if(board.ready_heartbeat_tx(&board))      board.heartbeat_tx(&board);*/
 
-    set_sleep_mode(SLEEP_MODE_PWR_DOWN);  // Power down microchip on sleep mode
-    cli();                                // Disable global interrupts
+    //cli();                                // Disable global interrupts
     if (f_timer)
     {
       // reset the timer flag
@@ -148,16 +153,21 @@ void loop(){
           // board.sample(&board);
           board.tx(&board);
       }
+
+      set_sleep_mode(SLEEP_MODE_IDLE);    // Power down microchip on sleep mode
       sleep_enable();                     // Set the sleep enable bit
       power_adc_disable();                // Disable peripherals
       power_spi_disable();
       power_timer0_disable();
       power_timer2_disable();
       power_twi_disable();
-      sleep_bod_disable();                // Disable brown out detector
+      sleep_mode();
+      /*sleep_bod_disable();                // Disable brown out detector
       sei();                              // Enable global interrupts
-      sleep_cpu();                        // Put device into sleep mode
+      sleep_cpu();                        // Put device into sleep mode*/
+
       sleep_disable();                    // Clear the sleep enable bit
+      power_all_enable();                 // Reenable peripherals
     }
     sei();                                // Enable global interrupts
 }
@@ -170,4 +180,5 @@ ISR(TIMER1_OVF_vect){
    {
      f_timer = 1;
    }
+   Serial.println(F("timer 1"));
 }

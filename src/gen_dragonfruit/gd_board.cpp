@@ -53,6 +53,7 @@ void gd_board_init(gd_board *b){
     b->data_packet.mpl115a2t1_temp = 0;
     b->data_packet.hih6131_humidity_pct = 0;
     b->data_packet.mpl115a2t1_press = 0;
+    b->cycle_count = 0;
 }
 
 static void gd_board_print_build_opts()
