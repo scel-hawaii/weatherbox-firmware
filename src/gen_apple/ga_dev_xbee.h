@@ -1,9 +1,7 @@
 #include <Arduino.h>
-//#include <XBee.h>
 #include <SoftwareSerial.h>
 
 #define _GA_DEV_XBEE_BUFSIZE_ 150
-
 
 #define START_BYTE 0x7e
 #define ESCAPE 0x7d
@@ -18,14 +16,14 @@
 #define ZB_BROADCAST_PACKET 0x02
 
 struct XBee {
-  Stream* serial;
-  uint8_t api_id;
-  uint8_t frame_id;
-  uint8_t broadcast_range;
-  uint8_t option;
-  uint16_t addr16;
-  uint32_t msb;
-  uint32_t lsb;
+    Stream* serial;
+    uint8_t api_id;
+    uint8_t frame_id;
+    uint8_t broadcast_range;
+    uint8_t option;
+    uint16_t addr16;
+    uint32_t msb;
+    uint32_t lsb;
 };
 
 

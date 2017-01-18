@@ -188,7 +188,7 @@ static void ga_board_post(){
 
     }
 
-    ga_dev_gps_low();
+    ga_dev_gps_power();
     Serial.println(F("POST End"));
 }
 
@@ -353,14 +353,21 @@ static void ga_board_tx(struct ga_board* b){
     Serial.println(F("Sample TX End"));
 }
 
+
 static int ga_board_ready_gps_tx(struct ga_board* b){
+
+  //todo: Turn on then poll when ready, not with timer
+
+  //polls every 24 hours
   const unsigned long wait_ms = (unsigned long) 1000*60*60*24; //24 hours
   const unsigned long sample_delta = millis() - b->prev_gps_ms;
 
+  //turns on 5 mins before poll
   if(sample_delta >= (wait_ms - ((unsigned long) 1000 * 60 * 5))) {
-    ga_dev_gps_high();
+    ga_dev_gps_power();
   }
 
+  //If board is ready returns true
   if( sample_delta >= wait_ms){
     if(ga_dev_gps_ready()){
       b->prev_gps_ms = millis();
@@ -395,7 +402,7 @@ static void ga_board_gps_tx(struct ga_board* b){
   memset(payload, '\0', sizeof(payload));
   memcpy(payload, &(gps_packet), schema_len);
   ga_dev_xbee_send(payload, schema_len);
-  ga_dev_gps_low();
+  ga_dev_gps_power(); // turn off GPS
   Serial.println(F("TX GPS End"));
 }
 

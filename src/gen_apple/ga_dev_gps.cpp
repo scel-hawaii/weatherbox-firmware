@@ -1,15 +1,19 @@
 #include "ga_dev_gps.h"
 
-#define GPSECHO  false //Define true to echo gps data to serial monitor
+//Define true to echo gps data to serial monitor
+//Used in GPS ready function
+#define GPSECHO  false
 
-SoftwareSerial mySerial(_PIN_GPS_TX, _PIN_GPS_RX);
+/* Creates a tx/rx connection to be used for the GPS */
+SoftwareSerial mySerial(_GA_PIN_GPS_TX, _GA_PIN_GPS_RX);
 Adafruit_GPS GPS(&mySerial);
 
+/* Enables GPS */
 void ga_dev_gps_open(void) {
 
-    pinMode(_PIN_GPS_ENABLE , OUTPUT);
-    //Enable pin needs to be pulled low;
-    digitalWrite(_PIN_GPS_ENABLE , HIGH);
+    pinMode(_GA_PIN_GPS_ENABLE , OUTPUT);
+
+    digitalWrite(_GA_PIN_GPS_ENABLE , HIGH);
 
     //GPS baud rate should be 9600
     GPS.begin(9600);
@@ -23,17 +27,21 @@ void ga_dev_gps_open(void) {
 
 }
 
-void ga_dev_gps_high(void){
-    if(digitalRead(_PIN_GPS_ENABLE) == HIGH){
-      return;
+/* Function to turn GPS on or off */
+void ga_dev_gps_power(void){
+    if(digitalRead(_GA_PIN_GPS_ENABLE)== HIGH){
+        digitalWrite(_GA_PIN_GPS_ENABLE, LOW);
+        return;
     }
-    digitalWrite(_PIN_GPS_ENABLE , HIGH);
+
+    else {
+        digitalWrite(_GA_PIN_GPS_ENABLE, HIGH);
+        return;
+    }
+
 }
 
-void ga_dev_gps_low(void){
-    digitalWrite(_PIN_GPS_ENABLE , LOW);
-}
-
+/* Checks if GPS is ready and there is a fix*/
 bool ga_dev_gps_ready(void){
     char c = GPS.read();
 
@@ -45,18 +53,21 @@ bool ga_dev_gps_ready(void){
         if (!GPS.parse(GPS.lastNMEA())){
             return false;
         }
+
+        if(GPS.fix) {
+            return true;
+        }
+
+        else {
+            return false;
+        }
     }
 
-    if(GPS.fix) {
-        return true;
-    }
-
-    else {
-        return false;
-    }
+    return false;
 
   }
 
+//Sets GPS latitude value
 float ga_dev_gps_latitude(void){
       float value = 10075.89;
 
@@ -67,6 +78,7 @@ float ga_dev_gps_latitude(void){
       return value;
 }
 
+//sets GPS longitude value
 float ga_dev_gps_longitude(void){
       float value = 7740.90;
       #ifndef SEN_STUB
@@ -76,6 +88,7 @@ float ga_dev_gps_longitude(void){
       return value;
 }
 
+//sets altitude value
 float ga_dev_gps_altitude(void){
       float value = 203.75;
       #ifndef SEN_STUB
