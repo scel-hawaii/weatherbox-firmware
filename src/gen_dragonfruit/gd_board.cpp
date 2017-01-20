@@ -25,6 +25,14 @@ static int gd_board_ready_tx(struct gd_board* b);
 static int gd_board_ready_heartbeat_tx(struct gd_board* b);
 static void gd_board_heartbeat_tx(struct gd_board* b);
 
+/******************************
+ * 
+ * Name:        gd_board_init
+ * Returns:     Nothing
+ * Parameter:   Function pointer to struct gd_board 
+ * Description: Initialize Dragonfruit board 
+ * 
+ ******************************/
 void gd_board_init(gd_board *b){
     // Link functions to make them accessable
     b->print_build_opts = &gd_board_print_build_opts;
@@ -62,6 +70,14 @@ void gd_board_init(gd_board *b){
     b->data_packet.mpl115a2t1_press = 0;
 }
 
+/******************************
+ * 
+ * Name:        gd_board_print_build_opts
+ * Returns:     Nothing
+ * Parameter:   Nothing
+ * Description: Initialize board generation and baudrate
+ * 
+ ******************************/
 static void gd_board_print_build_opts()
 {
     Serial.begin(9600);
@@ -69,6 +85,15 @@ static void gd_board_print_build_opts()
     Serial.println(F("Gen: dragonfruit"));
 }
 
+/******************************
+ * 
+ * Name:        gd_board_setup
+ * Returns:     Nothing
+ * Parameter:   Function pointer to struct gd_board
+ * Description: Enable sensor pin, initialize sensors,
+ *              obtain node address from eeprom
+ * 
+ ******************************/
 static void gd_board_setup(struct gd_board* b){
     Serial.begin(9600);
     Serial.println(F("Board Setup Start"));
@@ -93,7 +118,16 @@ static void gd_board_setup(struct gd_board* b){
     Serial.println(F("Board Setup Done"));
 }
 
-// power on self test
+/******************************
+ * 
+ * Name:        gd_board_post
+ * Returns:     Nothing
+ * Parameter:   Nothing
+ * Description: Power on self test when board initially starts
+ *              and poll each sensor. Also used to check 
+ *              sensor values on serial monitor.
+ * 
+ ******************************/
 static void gd_board_post(){
     Serial.println(F("POST Begin"));
 
@@ -162,9 +196,16 @@ static void gd_board_post(){
     }
 
     Serial.println(F("POST End"));
-
 }
 
+/******************************
+ * 
+ * Name:        gd_board_sample
+ * Returns:     Nothing
+ * Parameter:   Function pointer to struct gd-board
+ * Description: Sample each sensor and store into data packet
+ * 
+ ******************************/
 static void gd_board_sample(struct gd_board* b){
     Serial.print("[");
     Serial.print(millis());
@@ -217,10 +258,26 @@ static int gd_board_ready_sample(struct gd_board* b){
     }
 }
 
+/******************************
+ * 
+ * Name:        gd_board_ready_run_cmd
+ * Returns:     Number of bytes available to read
+ * Parameter:   Function pointer to struct gd-board
+ * Description: Get the number of bytes avaiable for reading from the serial port
+ * 
+ ******************************/
 static int gd_board_ready_run_cmd(struct gd_board* b){
     return Serial.available();
 }
 
+/******************************
+ * 
+ * Name:        gd_board_run_cmd
+ * Returns:     Nothing
+ * Parameter:   Function pointer to struct gd-board
+ * Description: Poll sensors in CMD mode in serial monitor
+ * 
+ ******************************/
 static void gd_board_run_cmd(struct gd_board* b){
     Serial.println(F("Enter CMD Mode"));
     while(Serial.read() != '\n');
