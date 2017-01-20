@@ -1,3 +1,12 @@
+/*******************************
+ *
+ * File: gd_board.cpp
+ *
+ * Contains definitions for board initialization, PlatformIO POST 
+ * commands, and sampling sensors.    
+ *
+ * ****************************/
+
 #include "gd_board.h"
 
 static void gd_board_print_build_opts();
