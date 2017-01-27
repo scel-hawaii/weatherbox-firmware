@@ -231,6 +231,14 @@ static void gd_board_sample(struct gd_board* b){
     gd_board_tx(b);
 }
 
+/******************************
+ * 
+ * Name:        gd_board_ready_tx
+ * Returns:     Integer indicating if ready to transmit
+ * Parameter:   Function pointer to struct gd-board
+ * Description: Checks if board is ready to transmit
+ * 
+ ******************************/
 static int gd_board_ready_tx(struct gd_board* b){
     // Disabled this for dragonfruit deployment on 2016-10-06 with T=30s
     /*
@@ -245,6 +253,17 @@ static int gd_board_ready_tx(struct gd_board* b){
     return 0;
 }
 
+/******************************
+ * 
+ * Name:        gd_board_ready_sample
+ * Returns:     Integer indicating if ready to sample
+ * Parameter:   Function pointer to struct gd-board
+ * Description: Waits 30 seconds between sampling sensors
+ *              and returns a "1" after 30 seconds. This
+ *              implementation is used instead of a delay
+ *              since delay will block all other operations.
+ * 
+ ******************************/
 static int gd_board_ready_sample(struct gd_board* b){
     const unsigned long wait_ms = 1000*30;
     const unsigned long sample_delta = millis() - b->prev_sample_ms;
@@ -307,6 +326,17 @@ static void gd_board_run_cmd(struct gd_board* b){
     }
 }
 
+/******************************
+ * 
+ * Name:        gd_board_ready_heartbeat_tx
+ * Returns:     Integer indicating if ready to transmit
+ * Parameter:   Function pointer to struct gd-board
+ * Description: Waits 30 seconds between sampling sensors
+ *              and returns a "1" after 30 seconds. This
+ *              implementation is used instead of a delay
+ *              since delay will block all other operations.
+ * 
+ ******************************/
 static int gd_board_ready_heartbeat_tx(struct gd_board* b){
     const int wait_ms = 3000;
     int sample_delta = millis() - b->prev_heartbeat_ms;
@@ -333,6 +363,14 @@ static int gd_board_ready_heartbeat_tx(struct gd_board* b){
     return 0;
 }
 
+/******************************
+ * 
+ * Name:        gd_board_heartbeat_tx
+ * Returns:     Nothing
+ * Parameter:   Function pointer to struct gd-board
+ * Description: Transmits heartbeat packet
+ * 
+ ******************************/
 static void gd_board_heartbeat_tx(struct gd_board* b){
     uint8_t payload[_GD_DEV_XBEE_BUFSIZE_];
     struct gd_heartbeat_packet hb_packet;
@@ -357,6 +395,14 @@ static void gd_board_heartbeat_tx(struct gd_board* b){
     Serial.println(F("TX Heartbeat End"));
 }
 
+/******************************
+ * 
+ * Name:        gd_board_tx
+ * Returns:     Nothing
+ * Parameter:   Function pointer to struct gd-board
+ * Description: Transmits sensor packet
+ * 
+ ******************************/
 static void gd_board_tx(struct gd_board* b){
     uint8_t payload[_GD_DEV_XBEE_BUFSIZE_];
     int schema_len = sizeof(b->data_packet);
