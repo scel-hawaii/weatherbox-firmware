@@ -6,6 +6,12 @@
  * Apogee sp215 analog sensor to measure solar irradiance in millivolts (mV) and the ADS1100 
  * ADC converter to convert the Apogee sp215 reading into a digital value.
  *
+ * Product page: http://www.apogeeinstruments.com/sp-215-amplified-0-5-volt-pyranometer/
+ * Datasheet: http://www.apogeeinstruments.com/content/SP-100-200-spec-sheet.pdf
+ *
+ * Product page: http://www.ti.com/product/ADS1100
+ * Datasheet: http://www.ti.com/lit/ds/symlink/ads1100.pdf
+ *
  * ****************************/
 
 #include "gd_dev_apogee_sp215.h"

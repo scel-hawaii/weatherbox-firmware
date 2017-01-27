@@ -2,9 +2,14 @@
  *
  * File: gd_dev_adafruit_MPL115A2_press.cpp
  *
- * This module is a driver for the pressure sensor. It uses the Adafruit 
- * MPL115A2 sensor to measure pressure in Pa.
+ * This module is a driver for the MPL115A2 pressure sensor 
+ * that measures pressure in Pa. Technically this is not an 
+ * Adafruit sensor - Adafruit creates the breakout board for 
+ * this sensor that is actually manufactured by Freescale.
  * 
+ * Product page: http://www.nxp.com/products/sensors/pressure-sensors/barometric-pressure-15-to-115-kpa/50-to-115kpa-absolute-digital-pressure-sensor:MPL115A
+ * Datasheet: http://www.nxp.com/assets/documents/data/en/data-sheets/MPL115A2.pdf
+ *
  ******************************/
 
 #include "gd_dev_adafruit_MPL115A2_press.h"

@@ -5,6 +5,9 @@
  * This module is a driver for the XBee module. It uses the XBee 
  * to construct and transmit sensor data in packets.
  *
+ * Product page: http://www.digi.com/support/productdetail?pid=4549
+ * Datasheet: http://www.digi.com/resources/documentation/digidocs/PDFs/90000976.pdf
+ *
  ******************************/
 
 #include "gd_dev_xbee.h"

@@ -3,7 +3,12 @@
  * File: gd_dev_adafruit_MPL115A2_temp.cpp 
  *
  * This module is a driver for the temperature sensor. It uses the
- * Adafruit MPL115A2 sensor to measure temperature in cK.
+ * Adafruit MPL115A2 sensor to measure temperature in cK. Technically 
+ * this is not an Adafruit sensor - Adafruit creates the breakout 
+ * board for this sensor that is actually manufactured by Freescale.
+ *
+ * Product page: http://www.nxp.com/products/sensors/pressure-sensors/barometric-pressure-15-to-115-kpa/50-to-115kpa-absolute-digital-pressure-sensor:MPL115A
+ * Datasheet: http://www.nxp.com/assets/documents/data/en/data-sheets/MPL115A2.pdf
  *
  ******************************/
 

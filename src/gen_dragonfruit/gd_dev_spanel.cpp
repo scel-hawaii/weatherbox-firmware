@@ -5,6 +5,8 @@
  * This module is a driver for the solar panel module. It uses the 
  * Adafruit "Huge 6V 6W Solar panel" to measure panel voltage in mV.
  * 
+ * Product page: https://www.adafruit.com/products/1525
+ * 
  ******************************/
 
 #include "gd_dev_spanel.h"
