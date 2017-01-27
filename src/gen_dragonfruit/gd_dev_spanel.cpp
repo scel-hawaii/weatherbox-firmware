@@ -16,7 +16,7 @@
  * Name:        gd_dev_spanel_open
  * Returns:     Nothing
  * Parameter:   Nothing
- * Description: Initialize solar panel module 
+ * Description: Initialize solar panel pins
  * 
  ******************************/
 void gd_dev_spanel_open(void){
