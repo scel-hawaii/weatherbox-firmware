@@ -42,7 +42,7 @@ void gg_board_init(gg_board *b){
     b->prev_sample_ms = 0;
 
     // Initialize the packet
-    b->data_packet.schema = 1;
+    b->data_packet.schema = 4;
     b->data_packet.node_addr = 0;
     b->data_packet.uptime_ms = 0;
     b->data_packet.batt_mv = 0;

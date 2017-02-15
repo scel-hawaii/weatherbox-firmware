@@ -57,7 +57,7 @@ static void ga_board_print_build_opts()
 {
     Serial.begin(9600);
     Serial.println(F("Board Opts"));
-    Serial.println(F("Gen: apple23"));
+    Serial.println(F("Gen: appler23"));
 }
 
 static void ga_board_setup(struct ga_board* b){
