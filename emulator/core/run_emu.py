@@ -8,6 +8,7 @@ import sys
 import os
 import datetime
 import signal
+from emulator import Emulator
 
 #
 # Check arguments and files
@@ -36,28 +37,9 @@ if( os.path.exists("emu_online.txt")):
 # Main execution
 #
 
-bufsize = 0
-output_file = open("emu_output.txt", "a", bufsize)
-
-print("Running emulator with build: " + firmware_build)
-
-launch_emu_cmd = "emu_base_model/obj-*/emu_base_model.elf emu_base_model/*.ihex"
-emu_proc = Popen([launch_emu_cmd], shell=True, stdout=output_file, stderr=output_file)
-
-# Block and wait for the emulator model to come online
-# otherwise we don't be able to upload
-#
-# The base emulator model writes to emu_online.txt when
-# it is online.
-while( not os.path.exists("emu_online.txt") ):
-    time.sleep(0.01)
-
-print("Running upload command")
-
-upload_cmd = "cd " + build_dir + " && avrdude -p m328p -c arduino -P /tmp/simavr-uart0 -U flash:w:firmware.hex"
-# Use the 'call' command here to block execution until we want to
-# start reading from the virtual serial port
-upload_proc = call([upload_cmd], shell=True, stdout=output_file, stderr=output_file)
+emulator = Emulator()
+emulator.start()
+emulator.upload(build_dir)
 
 ser = serial.Serial('/tmp/simavr-uart0', 9600)
 
@@ -73,5 +55,5 @@ signal.signal(signal.SIGTERM, signal_term_handler)
 
 while True:
     result = ser.read()
-    output_file.write(result)
-    # sys.stdout.write(result)
+    sys.stdout.write(result)
+    # output_file.write(result)
