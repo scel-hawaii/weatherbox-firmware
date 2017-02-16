@@ -27,8 +27,8 @@ class Emulator:
         self.emu_proc.kill()
 
     # Upload to the serial port of the device
-    def upload(self, build_path):
-        upload_cmd = "cd " + str(build_path) + " && avrdude -p m328p -c arduino -P /tmp/simavr-uart0 -U flash:w:firmware.hex"
+    def upload(self, build_path, build_filename):
+        upload_cmd = "cd " + str(build_path) + " && avrdude -p m328p -c arduino -P /tmp/simavr-uart0 -U flash:w:" + build_filename
 
         # Use the 'call' command here to block execution until we want to
         # start reading from the virtual serial port
