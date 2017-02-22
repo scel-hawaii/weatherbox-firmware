@@ -35,8 +35,16 @@
 #include <Adafruit_BMP085.h>
 #include <Adafruit_MPL115A2.h>
 #include <Adafruit_ADS1015.h>
+#include <TinyGPS++.h>
 #include <HIH613x.h>
+
+#ifdef GC
 #include <XBee.h>
+#endif
+
+#ifdef GD
+#include <XBee.h>
+#endif
 
 #ifdef GA
 struct ga_board board;
@@ -107,4 +115,8 @@ void loop(){
     if(board.ready_tx(&board))      board.tx(&board);
     if(board.ready_run_cmd(&board))      board.run_cmd(&board);
     if(board.ready_heartbeat_tx(&board))      board.heartbeat_tx(&board);
+
+    #ifdef GA
+    if(board.ready_gps_tx(&board))    board.gps_tx(&board);
+    #endif
 }

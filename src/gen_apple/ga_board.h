@@ -5,6 +5,7 @@
 #include "ga_dev_batt.h"
 #include "ga_dev_spanel.h"
 #include "ga_dev_eeprom_naddr.h"
+#include "ga_dev_gps.h"
 
 #ifndef GA_BOARD_H
 #define GA_BOARD_H
@@ -28,6 +29,14 @@ struct ga_heartbeat_packet{
     uint16_t batt_mv;               // Battery Voltage (in milli volts)
 };
 
+struct ga_gps_packet{
+  uint16_t schema;
+  uint16_t node_addr;               // Address of Arduino
+  uint32_t uptime_ms;               // Time since start of program
+  float latitude;                   
+  float longitude;
+  float altitude;
+};
 
 // Legacy apple schema.
 typedef struct {
@@ -59,8 +68,12 @@ struct ga_board{
     int (*ready_heartbeat_tx)(struct ga_board* b);
     void (*heartbeat_tx)(struct ga_board* b);
 
+    int (*ready_gps_tx)(struct ga_board* b);
+    void (*gps_tx)(struct ga_board* b);
+
     unsigned long prev_sample_ms;
     unsigned long prev_heartbeat_ms;
+    unsigned long prev_gps_ms;
     int sample_count;
     uint16_t node_addr;
     struct ga_packet data_packet;
