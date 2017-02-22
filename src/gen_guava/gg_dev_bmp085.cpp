@@ -1,11 +1,11 @@
-#include "ga_dev_bmp085.h"
+#include "gg_dev_bmp085.h"
 static Adafruit_BMP085 bmp085;
 
-void ga_dev_bmp085_open(void){
+void gg_dev_bmp085_open(void){
     bmp085.begin();
 }
 
-uint32_t ga_dev_bmp085_read_press(void){
+uint32_t gg_dev_bmp085_read_press(void){
     uint32_t value = 100000;
 
     #ifndef SEN_STUB
@@ -15,7 +15,7 @@ uint32_t ga_dev_bmp085_read_press(void){
     return value;
 }
 
-int16_t ga_dev_bmp085_read_temp(void){
+int16_t gg_dev_bmp085_read_temp(void){
     int16_t value = 1000;
 
     #ifndef SEN_STUB
