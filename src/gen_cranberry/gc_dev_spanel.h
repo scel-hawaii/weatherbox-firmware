@@ -1,3 +1,11 @@
+/*******************************
+ *
+ * File: gc_dev_spanel.h
+ *
+ * Contains prototypes for solar panel functions
+ *
+ ******************************/
+
 #include <Adafruit_ADS1015.h>
 #include <Wire.h>
 

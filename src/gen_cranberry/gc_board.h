@@ -1,6 +1,6 @@
 /*******************************
  *
- * File: gc_board.h 
+ * File: gc_board.h
  *
  * Contains struct for Dragonfruit packet, heartbeat, and board
  *
