@@ -1,20 +1,16 @@
 /*******************************
  *
- * File: gc_dev_apogee_SP212.cpp
+ * File: gc_dev_apogee_SP212_irradiance.cpp
  *
  * This module is a driver for the solar irradiance sensor. It uses the
- * Apogee sp215 analog sensor to measure solar irradiance in millivolts (mV) and the ADS1100
- * ADC converter to convert the Apogee sp215 reading into a digital value.
+ * Apogee SP212 analog sensor to measure solar irradiance in millivolts (mV)
  *
- * Product page: http://www.apogeeinstruments.com/sp-215-amplified-0-5-volt-pyranometer/
- * Datasheet: http://www.apogeeinstruments.com/content/SP-100-200-spec-sheet.pdf
- *
- * Product page: http://www.ti.com/product/ADS1100
- * Datasheet: http://www.ti.com/lit/ds/symlink/ads1100.pdf
+ * Product page: http://www.apogeeinstruments.com/sp-212-amplified-0-2-5-volt-pyranometer/
+ * Datasheet: http://www.apogeeinstruments.com/content/SP-212-SP-215-manual.pdf
  *
  * ****************************/
 
-#include "gc_dev_apogee_SP212.h"
+#include "gc_dev_apogee_SP212_irradiance.h"
 
 static Adafruit_ADS1115 adc;
 

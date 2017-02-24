@@ -1,6 +1,6 @@
 /*******************************
  *
- * File: gc_dev_spanel.cpp
+ * File: gc_dev_solar_panel.cpp
  *
  * This module is a driver for the solar panel module. It uses the
  * Adafruit "Huge 6V 6W Solar panel" to measure panel voltage in mV.
@@ -9,7 +9,7 @@
  *
  ******************************/
 
-#include "gc_dev_spanel.h"
+#include "gc_dev_solar_panel.h"
 
 static Adafruit_ADS1115 adc;
 

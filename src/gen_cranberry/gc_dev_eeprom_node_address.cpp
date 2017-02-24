@@ -1,13 +1,13 @@
 /*******************************
  *
- * File: gc_dev_eeprom_naddr.cpp
+ * File: gc_dev_eeprom_node_address.cpp
  *
  * This module is a driver for the EEPROM used
- * to burn the Node ID.
- * 
+ * to read the Node ID.
+ *
  ******************************/
 
-#include "gc_dev_eeprom_naddr.h"
+#include "gc_dev_eeprom_node_address.h"
 
 void gc_dev_eeprom_naddr_open(void){}
 

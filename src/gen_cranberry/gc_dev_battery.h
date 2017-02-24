@@ -1,6 +1,6 @@
 /*******************************
  *
- * File: gc_dev_batt.h
+ * File: gc_dev_battery.h
  *
  * Contains prototypes for battery reading functions
  *

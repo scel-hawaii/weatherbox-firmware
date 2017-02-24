@@ -1,6 +1,6 @@
 /*******************************
  *
- * File: gc_dev_honeywell_HIH6131.cpp
+ * File: gc_dev_honeywell_HIH6131_temperature.cpp
  *
  * This module is a driver for the humidity sensor. It uses the Honeywell
  * HIH6131 sensor to measure the humidity percentage value.
@@ -10,7 +10,7 @@
  *
  ******************************/
 
-#include "gc_dev_honeywell_HIH6131.h"
+#include "gc_dev_honeywell_HIH6131_temperature.h"
 #include "HIH613x.h"
 
 static HIH613x hih6131(0x27);

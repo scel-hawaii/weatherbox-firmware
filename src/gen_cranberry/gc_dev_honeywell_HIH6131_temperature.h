@@ -1,6 +1,6 @@
 /*******************************
  *
- * File: gc_dev_honeywell_HIH6131.h 
+ * File: gc_dev_honeywell_HIH6131_temperature.h
  *
  * Contains prototypes for humidty sensor functions
  *

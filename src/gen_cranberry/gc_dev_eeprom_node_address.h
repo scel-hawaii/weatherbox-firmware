@@ -1,8 +1,9 @@
 /*******************************
  *
- * File: gc_dev_batt.h 
+ * File: gc_dev_eeprom_node_address.h
  *
- * Contains prototypes for battery reading functions
+ * Contains prototypes for reading the node ID
+ * from the EEPROM
  *
  ******************************/
 

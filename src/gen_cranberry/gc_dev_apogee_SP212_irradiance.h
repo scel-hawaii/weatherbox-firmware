@@ -1,6 +1,6 @@
 /*******************************
  *
- * File: gc_dev_apogee_sp215.h
+ * File: gc_dev_apogee_sp215_irradiance.h
  *
  * Contains prototypes for solar irradiance functions
  *

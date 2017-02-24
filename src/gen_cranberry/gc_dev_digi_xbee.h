@@ -1,3 +1,11 @@
+/*******************************
+ *
+ * File: gc_dev_digi_xbee.h
+ *
+ * Contains prototypes for XBee transceiver functions
+ *
+ ******************************/
+
 #include <Arduino.h>
 #include <XBee.h>
 #include <SoftwareSerial.h>

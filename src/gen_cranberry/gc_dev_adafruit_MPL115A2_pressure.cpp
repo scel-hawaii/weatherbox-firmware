@@ -1,6 +1,6 @@
 /*******************************
  *
- * File: gd_dev_adafruit_MPL115A2_press.cpp
+ * File: gc_dev_adafruit_MPL115A2_pressure.cpp
  *
  * This module is a driver for the MPL115A2 pressure sensor
  * that measures pressure in Pa. Technically this is not an
@@ -12,7 +12,7 @@
  *
  ******************************/
 
-#include "gc_dev_adafruit_MPL115A2.h"
+#include "gc_dev_adafruit_MPL115A2_pressure.h"
 #include "Adafruit_MPL115A2.h"
 
 static Adafruit_MPL115A2 mpl115a2;
@@ -32,7 +32,7 @@ void gc_dev_adafruit_MPL115A2_open(void){
 
 /******************************
  *
- * Name:        gc_dev_adafruit_MPL115A2_press_read
+ * Name:        gc_dev_adafruit_MPL115A2_press_pa_read
  * Returns:     Pressure value in Pa
  * Parameter:   Nothing
  * Description: Reads pressure sensor

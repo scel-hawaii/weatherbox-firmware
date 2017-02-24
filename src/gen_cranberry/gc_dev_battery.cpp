@@ -1,12 +1,15 @@
 /*******************************
  *
- * File: gc_dev_batt.cpp
+ * File: gc_dev_battery.cpp
  *
  * This module is a driver for checking the battery reading in mV.
  *
+ * Product page: https://www.adafruit.com/product/353
+ * Datasheet: https://cdn-shop.adafruit.com/product-files/353/C450_-_ICR18650_6600mAh_3.7V_20140729.pdf
+ *
  ******************************/
 
-#include "gc_dev_batt.h"
+#include "gc_dev_battery.h"
 
 static Adafruit_ADS1115 adc;
 
