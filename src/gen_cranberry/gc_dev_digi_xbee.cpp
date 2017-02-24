@@ -21,7 +21,7 @@
  *
  ******************************/
 
-void gc_dev_xbee_open(void)
+void gc_dev_digi_xbee_open(void)
 {
     soft_serial.begin(9600);
     xbee.begin(soft_serial);
@@ -39,7 +39,7 @@ void gc_dev_xbee_open(void)
  *
  ******************************/
 
-int gc_dev_xbee_avail(void)
+int gc_dev_digi_xbee_avail(void)
 {
     return Serial.available();
 }
@@ -53,7 +53,7 @@ int gc_dev_xbee_avail(void)
  *
  ******************************/
 
-int gc_dev_xbee_read(void)
+int gc_dev_digi_xbee_read(void)
 {
     return Serial.read();
 }
@@ -67,7 +67,7 @@ int gc_dev_xbee_read(void)
  *
  ******************************/
 
-void gc_dev_xbee_write(uint8_t *data, int data_len)
+void gc_dev_digi_xbee_write(uint8_t *data, int data_len)
 {
     XBeeAddress64 addr64 = XBeeAddress64(0, 0);
     ZBTxRequest zbtx = ZBTxRequest(addr64, data, data_len);

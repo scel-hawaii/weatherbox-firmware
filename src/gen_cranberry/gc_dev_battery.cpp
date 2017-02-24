@@ -15,27 +15,27 @@ static Adafruit_ADS1115 adc;
 
 /******************************
  *
- * Name:        gc_dev_batt_open
+ * Name:        gc_dev_battery_open
  * Returns:     Nothing
  * Parameter:   Nothing
  * Description: Initialize battery reading pins
  *
  ******************************/
 
-void gc_dev_batt_open(void){
+void gc_dev_battery_open(void){
     adc.begin();
 }
 
 /******************************
  *
- * Name:        gc_dev_batt_read
+ * Name:        gc_dev_battery_read
  * Returns:     Battery reading in mV
  * Parameter:   Nothing
  * Description: Reads battery voltage
  *
  ******************************/
 
-uint16_t gc_dev_batt_read(void){
+uint16_t gc_dev_battery_read(void){
     uint16_t value = 4000;
 
     #ifndef SEN_STUB
@@ -53,7 +53,7 @@ uint16_t gc_dev_batt_read(void){
 
 /******************************
  *
- * Name:        gc_dev_batt_test
+ * Name:        gc_dev_battery_test
  * Returns:     Nothing
  * Parameter:   Nothing
  * Description: Used by the POST function to sample the
@@ -61,15 +61,15 @@ uint16_t gc_dev_batt_read(void){
  *
  ******************************/
 
-void gc_dev_batt_test(void){
-    Serial.println(F("[P] Check batt value"));
-    uint16_t batt_val = gc_dev_batt_read();
+void gc_dev_battery_test(void){
+    Serial.println(F("[P] Check battery value"));
+    uint16_t battery_val = gc_dev_battery_read();
 
-    Serial.print(F("[P] batt value: "));
-    Serial.print(batt_val);
+    Serial.print(F("[P] battery value: "));
+    Serial.print(battery_val);
     Serial.println(F(" mV"));
 
-    if(batt_val < 0){
-        Serial.println(F("[P] \tError: batt out of range"));
+    if(battery_val < 0){
+        Serial.println(F("[P] \tError: battery value out of range"));
     }
 }

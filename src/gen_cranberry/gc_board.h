@@ -12,6 +12,7 @@
 #include "gc_dev_eeprom_node_address.h"
 #include "gc_dev_apogee_SP212_irradiance.h"
 #include "gc_dev_honeywell_HIH6131_temperature.h"
+#include "gc_dev_honeywell_HIH6131_humidity.h"
 #include "gc_dev_adafruit_MPL115A2_pressure.h"
 
 #ifndef GC_BOARD_H

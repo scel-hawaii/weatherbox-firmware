@@ -16,27 +16,27 @@ static Adafruit_ADS1115 adc;
 
 /******************************
  *
- * Name:        gc_dev_apogee_SP212_open
+ * Name:        gc_dev_apogee_SP212_irradiance_open
  * Returns:     Nothing
  * Parameter:   Nothing
  * Description: Initialize solar irradiance sensor
  *
  ******************************/
 
-void gc_dev_apogee_SP212_open(void){
+void gc_dev_apogee_SP212_irradiance_open(void){
     adc.begin();
 }
 
 /******************************
  *
- * Name:        gc_dev_apogee_SP212_solar_irr_read
+ * Name:        gc_dev_apogee_SP212_irradiance_read
  * Returns:     Solar irradiance value in millivolts (mV)
  * Parameter:   Nothing
  * Description: Reads solar irradiance sensor
  *
  ******************************/
 
-uint16_t gc_dev_apogee_SP212_solar_irr_read(void){
+uint16_t gc_dev_apogee_SP212_irradiance_read(void){
     uint16_t value = 4000;
 
     #ifndef SEN_STUB
@@ -48,7 +48,7 @@ uint16_t gc_dev_apogee_SP212_solar_irr_read(void){
 
 /******************************
  *
- * Name:        gc_dev_apogee_SP212_solar_irr_test
+ * Name:        gc_dev_apogee_SP212_irradiance_test
  * Returns:     Nothing
  * Parameter:   Nothing
  * Description: Used by the POST function to sample the
@@ -56,15 +56,15 @@ uint16_t gc_dev_apogee_SP212_solar_irr_read(void){
  *
  ******************************/
 
-void gc_dev_apogee_SP212_solar_irr_test(void){
-    Serial.println(F("[P] Check apogee_sp212 value"));
-    int apogee_sp212_val = gc_dev_apogee_SP212_solar_irr_read();
+void gc_dev_apogee_SP212_irradiance_test(void){
+    Serial.println(F("[P] Check apogee_SP212_irradiance value"));
+    int apogee_sp212_irradiance_val = gc_dev_apogee_SP212_irradiance_read();
 
-    Serial.print(F("[P] apogee_sp212 solar irr value: "));
-    Serial.print(apogee_sp212_val);
+    Serial.print(F("[P] apogee_sp212 irradiance value: "));
+    Serial.print(apogee_sp212_irradiance_val);
     Serial.println(F(" mV"));
 
-    if(apogee_sp212_val < 0){
-        Serial.println(F("[P] \tError: apogee solar irr out of range"));
+    if(apogee_sp212_irradiance_val < 0){
+        Serial.println(F("[P] \tError: apogee irradiane out of range"));
     }
 }
