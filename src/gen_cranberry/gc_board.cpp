@@ -91,7 +91,7 @@ static void gc_board_print_build_opts()
  *
  * Name:        gc_board_setup
  * Returns:     Nothing
- * Parameter:   Function pointer to struct gd_board
+ * Parameter:   Function pointer to struct gc_board
  * Description: Enable sensor pin, initialize sensors,
  *              obtain node address from eeprom
  *
@@ -197,7 +197,7 @@ static void gc_board_sample(struct gc_board* b){
  *
  * Name:        gc_board_ready_tx
  * Returns:     Integer indicating if ready to transmit
- * Parameter:   Function pointer to struct gd-board
+ * Parameter:   Function pointer to struct gc-board
  * Description: Checks to see if the board is ready
  *              transmit
  *
@@ -245,7 +245,7 @@ static int gc_board_ready_sample(struct gc_board* b){
  *
  * Name:        gc_board_ready_run_cmd
  * Returns:     Number of bytes available to read
- * Parameter:   Function pointer to struct gd-board
+ * Parameter:   Function pointer to struct gc-board
  * Description: Get the number of bytes avaiable for reading from the serial port
  *
  ******************************/
@@ -346,7 +346,7 @@ static void gc_board_run_cmd(struct gc_board* b){
 
 /******************************
  *
- * Name:        gc_board_run_cmd
+ * Name:        gc_board_ready_heartbeat_tx
  * Returns:     Integer indicating if ready to transmit
  * Parameter:   Function pointer to struct gc-board
  * Description: Waits 3 seconds between sampling sensors

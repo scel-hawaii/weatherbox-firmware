@@ -1,4 +1,24 @@
+/*******************************
+ *
+ * File: gc_dev_xbee.cpp
+ *
+ * This module is a driver for the XBee Transceiver. This
+ * is used to radio communication with the server
+ *
+ * Product page:
+ *
+ ******************************/
+
 #include "gc_dev_xbee.h"
+
+/******************************
+ *
+ * Name:        gc_dev_xbee_open
+ * Returns:     Nothing
+ * Parameter:   Nothing
+ * Description: Initialize XBee pins and VReg pin
+ *
+ ******************************/
 
 void gc_dev_xbee_open(void)
 {
@@ -9,15 +29,42 @@ void gc_dev_xbee_open(void)
     digitalWrite(3, HIGH);
 }
 
+/******************************
+ *
+ * Name:        gc_dev_xbee_avail
+ * Returns:     0 if busy, 1 if available
+ * Parameter:   Nothing
+ * Description: Check to see if the XBee is busy
+ *
+ ******************************/
+
 int gc_dev_xbee_avail(void)
 {
     return Serial.available();
 }
 
+/******************************
+ *
+ * Name:        gc_dev_xbee_read
+ * Returns:     Data from XBee
+ * Parameter:   Nothing
+ * Description: Read data from the XBee
+ *
+ ******************************/
+
 int gc_dev_xbee_read(void)
 {
     return Serial.read();
 }
+
+/******************************
+ *
+ * Name:        gc_dev_xbee_write
+ * Returns:     Nothing
+ * Parameter:   Nothing
+ * Description: Transmits packet through XBee
+ *
+ ******************************/
 
 void gc_dev_xbee_write(uint8_t *data, int data_len)
 {
