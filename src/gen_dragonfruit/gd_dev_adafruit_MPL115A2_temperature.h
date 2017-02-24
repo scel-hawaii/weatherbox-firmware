@@ -1,6 +1,6 @@
 /*******************************
  *
- * File: gd_dev_adafruit_MPL115A2_temp.h
+ * File: gd_dev_adafruit_MPL115A2_temperature.h
  *
  * Contains prototypes for temperature functions
  *

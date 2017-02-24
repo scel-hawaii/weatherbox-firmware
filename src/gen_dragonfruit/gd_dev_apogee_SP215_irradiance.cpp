@@ -77,6 +77,16 @@ uint32_t gd_dev_apogee_SP215_irradiance_read(void){
     return value;
 }
 
+/******************************
+ *
+ * Name:        gd_dev_apogee_SP215_irradiance_test
+ * Returns:     Nothing
+ * Parameter:   Nothing
+ * Description: Used by the POST function to sample the
+ *              sensor and displays the sample to Serial Monitor
+ *
+ ******************************/
+
 void gd_dev_apogee_SP215_irradiance_test(void) {
   Serial.println(F("[P] Check apogee_SP215_irradiance value"));
   int apogee_sp215_irradiance_val = gd_dev_apogee_SP215_irradiance_read();

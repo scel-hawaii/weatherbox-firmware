@@ -20,6 +20,7 @@
  * Description: Initialize XBee module
  *
  ******************************/
+
 void gd_dev_digi_xbee_open(void)
 {
     soft_serial.begin(9600);
@@ -52,6 +53,7 @@ void gd_dev_digi_xbee_open(void)
  * Description: Number of characters available for reading from the serial port
  *
  ******************************/
+
 int gd_dev_digi_xbee_avail(void)
 {
     return Serial.available();
@@ -66,6 +68,7 @@ int gd_dev_digi_xbee_avail(void)
  * Description: Readings incoming serial data
  *
  ******************************/
+
 int gd_dev_digi_xbee_read(void)
 {
     return Serial.read();
@@ -79,6 +82,7 @@ int gd_dev_digi_xbee_read(void)
  * Description: Transmit packet through XBee
  *
  ******************************/
+ 
 void gd_dev_digi_xbee_write(uint8_t *data, int data_len)
 {
     // Specify the address of the remote XBee
