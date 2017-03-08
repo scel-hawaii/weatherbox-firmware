@@ -64,6 +64,7 @@ void gd_board_init(gd_board *b){
     b->data_packet.node_addr = gd_dev_eeprom_node_address_read();
     b->data_packet.uptime_ms = 0;
     b->data_packet.batt_mv = 0;
+    b->data_packet.phantom_batt_mv = 0;
     b->data_packet.panel_mv = 0;
     b->data_packet.apogee_sp215 = 0;
     b->data_packet.mpl115a2t1_temp = 0;
@@ -110,6 +111,7 @@ static void gd_board_setup(struct gd_board* b){
     gd_dev_adafruit_MPL115A2_temperature_open();
     gd_dev_adafruit_MPL115A2_pressure_open();
     gd_dev_battery_open();
+    gd_dev_phantom_open();
     gd_dev_solar_panel_open();
     gd_dev_eeprom_node_address_open();
     gd_dev_apogee_SP215_irradiance_open();
@@ -153,6 +155,9 @@ static void gd_board_setup(struct gd_board* b){
      // Check battery voltage
      gd_dev_battery_test();
 
+     // Check phantom battery voltage
+     gd_dev_phantom_test();
+
      // check panel sensor value
      gd_dev_solar_panel_test();
 
@@ -179,6 +184,7 @@ static void gd_board_sample(struct gd_board* b){
     struct gd_packet* data_packet = &(b->data_packet);
     data_packet->uptime_ms           = millis();
     data_packet->batt_mv             = gd_dev_battery_read();
+    data_packet->phantom_batt_mv     = gd_dev_phantom_read();
     data_packet->panel_mv            = gd_dev_solar_panel_read();
     data_packet->mpl115a2t1_press    = gd_dev_adafruit_MPL115A2_pressure_pa_read();
     data_packet->mpl115a2t1_temp     = gd_dev_adafruit_MPL115A2_temperature_centik_read();

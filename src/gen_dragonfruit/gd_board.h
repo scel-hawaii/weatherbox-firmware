@@ -14,6 +14,7 @@
 #include "gd_dev_eeprom_node_address.h"
 #include "gd_dev_adafruit_MPL115A2_temperature.h"
 #include "gd_dev_adafruit_MPL115A2_pressure.h"
+#include "gd_dev_phantom.h"
 #include <Arduino.h>
 
 #define _PIN_SEN_EN_ 4
@@ -31,6 +32,7 @@ struct gd_packet{
   uint16_t mpl115a2t1_temp;    // Temperature (centiKelvin)
   uint16_t hih6131_humidity_pct;  // Humidity (percentage)
   uint32_t mpl115a2t1_press;  // Pressure (Pa)
+  uint16_t phantom_batt_mv    //Phantom battey voltage (in millivolts)
 };
 
 struct gd_heartbeat_packet{
