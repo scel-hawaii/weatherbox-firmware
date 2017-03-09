@@ -21,7 +21,7 @@ class Emulator:
     def start(self):
         self.emu_proc = Popen([self.launch_emu_cmd], shell=True)
 
-        print "started emulator process on pid: " + str(self.emu_proc.pid)
+        print("started emulator process on pid: " + str(self.emu_proc.pid))
 
     def stop(self):
         self.emu_proc.kill()

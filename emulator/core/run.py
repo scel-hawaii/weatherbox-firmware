@@ -57,5 +57,7 @@ signal.signal(signal.SIGTERM, signal_term_handler)
 
 while True:
     result = ser.read()
-    sys.stdout.write(result)
-    # output_file.write(result)
+
+    # Note: we need to specify utf-8 because python3 handles strings
+    # differently: http://stackoverflow.com/questions/21689365/python-3-typeerror-must-be-str-not-bytes-with-sys-stdout-write
+    sys.stdout.write( result.decode('utf-8') )
