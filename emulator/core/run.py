@@ -45,6 +45,7 @@ ser = serial.Serial('/tmp/simavr-uart0', 9600)
 
 # Define a term handler here or else the emu_proc won't get
 # killed properly when SIGTERM gets called in the server
+"""
 def signal_term_handler(signal, frame):
     global emu_proc
     emu_proc.terminate()
@@ -52,6 +53,7 @@ def signal_term_handler(signal, frame):
     sys.exit(0)
 
 signal.signal(signal.SIGTERM, signal_term_handler)
+"""
 
 while True:
     result = ser.read()

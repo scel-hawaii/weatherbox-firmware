@@ -101,7 +101,7 @@ def start():
         #
         # So running exec (which will replace the current running process) will
         # maintain compatability with debian.
-        cmd = "exec python2 ../core/run_emu.py {fw}".format(fw=firmware_build)
+        cmd = "exec python2 ../core/run.py {fw}".format(fw=firmware_build)
         emu_proc = Popen([cmd], shell=True)
 
     emu_state = "RUNNING"
