@@ -39,7 +39,7 @@ if( os.path.exists("emu_online.txt")):
 
 emulator = Emulator()
 emulator.start()
-emulator.upload(build_dir, "firmware.hex")
+emulator.upload_serial(build_dir, "firmware.hex")
 
 ser = serial.Serial('/tmp/simavr-uart0', 9600)
 

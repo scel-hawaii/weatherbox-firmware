@@ -27,7 +27,7 @@ class Emulator:
         self.emu_proc.kill()
 
     # Upload to the serial port of the device
-    def upload(self, build_path, build_filename):
+    def upload_serial(self, build_path, build_filename):
         upload_cmd = "cd " + str(build_path) + " && avrdude -p m328p -c arduino -P /tmp/simavr-uart0 -U flash:w:" + build_filename
 
         # Use the 'call' command here to block execution until we want to
@@ -39,7 +39,7 @@ class Emulator:
 
     # Upload directly into the MCU memory;
     # Not implemented yet.
-    def upload_to_memory():
+    def upload_backdoor():
         pass
 
 
@@ -55,7 +55,7 @@ class TestEmulator:
 
         firmware_build = "ga_stub"
         build_path = "../../.pioenvs/" + firmware_build
-        emulator.upload(build_path)
+        emulator.upload_serial(build_path)
 
         time.sleep(2)
         emulator.stop()
