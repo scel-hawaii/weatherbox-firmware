@@ -103,8 +103,6 @@ static void gg_board_setup(struct gg_board* b){
 
     // Open Devices
     gg_dev_digi_xbee_open();
-    gg_dev_sht1x_open();
-    gg_dev_bmp085_open();
     gg_dev_apogee_SP212_irradiance_open();
     gg_dev_battery_open();
     gg_dev_solar_panel_open();
@@ -136,7 +134,7 @@ static void gg_board_post(){
     Serial.println((int) gg_dev_eeprom_node_address_read());
 
     // Check sht1x
-    int sht1x_val = gg_dev_sht1x_read();
+    int sht1x_val = -1;
     Serial.print(F("[P] sht1x value: "));
     Serial.print(sht1x_val);
     Serial.println("\%");
@@ -146,7 +144,7 @@ static void gg_board_post(){
     }
 
     // Check BMP085
-    int32_t bmp085_val = gg_dev_bmp085_read_press();
+    int32_t bmp085_val = -1;
     Serial.print(F("[P] bmp085 value: "));
     Serial.print(bmp085_val/100);
     Serial.print(F("."));
@@ -158,7 +156,7 @@ static void gg_board_post(){
     }
 
     // Check BMP085 temperature
-    uint16_t bmp085_temp = gg_dev_bmp085_read_temp();
+    uint16_t bmp085_temp = -1;
     Serial.print(F("[P] bmp085 temp: "));
     Serial.print(bmp085_temp/10);
     Serial.print(".");
@@ -224,9 +222,9 @@ static void gg_board_sample(struct gg_board* b){
     data_packet->uptime_ms           = millis();
     data_packet->batt_mv             = gg_dev_battery_read();
     data_packet->panel_mv            = gg_dev_solar_panel_read();
-    data_packet->bmp085_press_pa     = gg_dev_bmp085_read_press();
-    data_packet->bmp085_temp_decic   = gg_dev_bmp085_read_temp();
-    data_packet->humidity_centi_pct  = gg_dev_sht1x_read();
+    data_packet->bmp085_press_pa     = -1;
+    data_packet->bmp085_temp_decic   = -1;
+    data_packet->humidity_centi_pct  = -1;
     data_packet->apogee_w_m2         = gg_dev_apogee_SP212_irradiance_read();
     data_packet->node_addr           = b->node_addr;
 

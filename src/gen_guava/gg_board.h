@@ -7,8 +7,6 @@
  ******************************/
 
 #include "gg_dev_digi_xbee.h"
-#include "gg_dev_sht1x.h"
-#include "gg_dev_bmp085.h"
 #include "gg_dev_apogee_SP212_irradiance.h"
 #include "gg_dev_battery.h"
 #include "gg_dev_solar_panel.h"
