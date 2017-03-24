@@ -17,7 +17,7 @@
  *
  ******************************/
 
-void gg_dev_batt_open(void){
+void gg_dev_battery_open(void){
     pinMode(_PIN_GG_BATTERY_, INPUT);
 }
 
