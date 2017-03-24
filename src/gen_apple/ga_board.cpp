@@ -103,8 +103,9 @@ static void ga_board_setup(struct ga_board* b){
 
     // Open Devices
     ga_dev_digi_xbee_open();
-    ga_dev_sht1x_open();
-    ga_dev_bmp085_open();
+    ga_dev_sensirion_SHT1X_humidity_open();
+    ga_dev_apogee_BMP180_pressure_open();
+    ga_dev_apogee_BMP180_temperature_open();
     ga_dev_apogee_SP212_irradiance_open();
     ga_dev_battery_open();
     ga_dev_solar_panel_open();
@@ -136,7 +137,7 @@ static void ga_board_post(){
     Serial.println((int) ga_dev_eeprom_node_address_read());
 
     // Check sht1x
-    int sht1x_val = ga_dev_sht1x_read();
+    int sht1x_val = ga_dev_sensirion_SHT1X_humidity_read();
     Serial.print(F("[P] sht1x value: "));
     Serial.print(sht1x_val);
     Serial.println("\%");
@@ -146,27 +147,27 @@ static void ga_board_post(){
     }
 
     // Check BMP085
-    int32_t bmp085_val = ga_dev_bmp085_read_press();
-    Serial.print(F("[P] bmp085 value: "));
+    int32_t bmp085_val = ga_dev_apogee_BMP180_pressure_read();
+    Serial.print(F("[P] BMP180 value: "));
     Serial.print(bmp085_val/100);
     Serial.print(F("."));
     Serial.print((bmp085_val-bmp085_val/10)/1000);
     Serial.println(" mb");
 
     if(bmp085_val < 80000){
-        Serial.println(F("[P] \tError: bmp085 pressure out of range"));
+        Serial.println(F("[P] \tError: BMP180 pressure out of range"));
     }
 
     // Check BMP085 temperature
-    uint16_t bmp085_temp = ga_dev_bmp085_read_temp();
-    Serial.print(F("[P] bmp085 temp: "));
+    uint16_t bmp085_temp = ga_dev_apogee_BMP180_temperature_read();
+    Serial.print(F("[P] BMP180 temp: "));
     Serial.print(bmp085_temp/10);
     Serial.print(".");
     Serial.print((bmp085_temp-bmp085_temp/10)/10);
     Serial.println(F(" celsius"));
 
     if(bmp085_temp < 0){
-        Serial.println(F("[P] \tError: bmp085 temperature out of range"));
+        Serial.println(F("[P] \tError: BMP180 temperature out of range"));
     }
 
     // Check apogee_sp212
@@ -224,9 +225,9 @@ static void ga_board_sample(struct ga_board* b){
     data_packet->uptime_ms           = millis();
     data_packet->batt_mv             = ga_dev_battery_read();
     data_packet->panel_mv            = ga_dev_solar_panel_read();
-    data_packet->bmp085_press_pa     = ga_dev_bmp085_read_press();
-    data_packet->bmp085_temp_decic   = ga_dev_bmp085_read_temp();
-    data_packet->humidity_centi_pct  = ga_dev_sht1x_read();
+    data_packet->bmp085_press_pa     = ga_dev_apogee_BMP180_pressure_read();
+    data_packet->bmp085_temp_decic   = ga_dev_apogee_BMP180_temperature_read();
+    data_packet->humidity_centi_pct  = ga_dev_sensirion_SHT1X_humidity_read();
     data_packet->apogee_w_m2         = ga_dev_apogee_SP212_irradiance_read();
     data_packet->node_addr           = b->node_addr;
 
