@@ -33,3 +33,8 @@ uint16_t gg_dev_eeprom_node_address_read(void){
     uint32_t node_addr = EEPROM.read(2) | (EEPROM.read(3)<<8);
     return node_addr;
 }
+
+void gg_dev_eeprom_node_address_test(void){
+    Serial.print(F("[P] node addr: "));
+    Serial.println((int) gg_dev_eeprom_node_address_read());
+}

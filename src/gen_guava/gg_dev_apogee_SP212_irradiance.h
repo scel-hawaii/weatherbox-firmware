@@ -14,4 +14,5 @@
 #define GG_DEV_APOGEE_SP212_IRRADIANCE_H
 void gg_dev_apogee_SP212_irradiance_open(void);
 int gg_dev_apogee_SP212_irradiance_read(void);
+void gg_dev_apogee_SP212_irradiance_test(void);
 #endif

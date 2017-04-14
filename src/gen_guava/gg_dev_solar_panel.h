@@ -14,4 +14,5 @@
 #define GG_DEV_SOLAR_PANEL
 void gg_dev_solar_panel_open(void);
 int gg_dev_solar_panel_read(void);
+void gg_dev_solar_panel_test(void);
 #endif

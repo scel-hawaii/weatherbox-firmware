@@ -42,3 +42,14 @@ uint16_t gg_dev_adafruit_BME280_pressure_read(void) {
 
   return value;
 }
+
+void gg_dev_adafruit_BME280_pressure_test(void){
+  int32_t BME280_pressure_val = gg_dev_adafruit_BME280_pressure_read();
+  Serial.print(F("[P] BME280 Pressure value: "));
+  Serial.print(BME280_pressure_val);
+  Serial.println("\%");
+
+  if(BME280_pressure_val < 80000){
+      Serial.println(F("[P] \tError: Pressure out of range"));
+  }
+}

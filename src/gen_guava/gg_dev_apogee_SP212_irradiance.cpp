@@ -47,3 +47,14 @@ int gg_dev_apogee_SP212_irradiance_read(void){
 
     return value;
 }
+
+void gg_dev_apogee_SP212_irradiance_test(void){
+  int apogee_sp212_val = gg_dev_apogee_SP212_irradiance_read();
+  Serial.print(F("[P] apogee_sp212 solar irradiance value: "));
+  Serial.print(apogee_sp212_val);
+  Serial.println(" mV");
+
+  if(apogee_sp212_val < 0){
+      Serial.println(F("[P] \tError: apogee solar irradiance out of range"));
+  }
+}

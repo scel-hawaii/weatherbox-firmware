@@ -133,68 +133,25 @@ static void gg_board_post(){
     Serial.println(F("POST Begin"));
 
     // Display node addr
-    Serial.print(F("[P] node addr: "));
-    Serial.println((int) gg_dev_eeprom_node_address_read());
+    gg_dev_eeprom_node_address_test();
 
     // Check BME280 Humidity
-    int BME280_humidity_val = gg_dev_adafruit_BME280_humidity_read();
-    Serial.print(F("[P] BME280 Humidity value: "));
-    Serial.print(BME280_humidity_val);
-    Serial.println("\%");
-
-    if(BME280_humidity_val < 0){
-        Serial.println(F("[P] \tError: Humidity out of range"));
-    }
+    gg_dev_adafruit_BME280_humidity_test();
 
     // Check BME280 Pressure
-    int32_t BME280_pressure_val = gg_dev_adafruit_BME280_pressure_read();
-    Serial.print(F("[P] BME280 Pressure value: "));
-    Serial.print(BME280_pressure_val);
-    Serial.println("\%");
-
-    if(BME280_pressure_val < 80000){
-        Serial.println(F("[P] \tError: Pressure out of range"));
-    }
+    gg_dev_adafruit_BME280_pressure_test();
 
     // Check BME280 Temperature
-    uint16_t BME280_temperature_val = gg_dev_adafruit_BME280_temperature_read();
-    Serial.print(F("[P] BME280 Temperature value: "));
-    Serial.print(BME280_temperature_val);
-    Serial.println(F(" C"));
-
-    if(BME280_temperature_val < 0){
-        Serial.println(F("[P] \tError: Temperature out of range"));
-    }
+    gg_dev_adafruit_BME280_temperature_test();
 
     // Check apogee_sp212
-    int apogee_sp212_val = gg_dev_apogee_SP212_irradiance_read();
-    Serial.print(F("[P] apogee_sp212 solar irradiance value: "));
-    Serial.print(apogee_sp212_val);
-    Serial.println(" mV");
-
-    if(apogee_sp212_val < 0){
-        Serial.println(F("[P] \tError: apogee solar irradiance out of range"));
-    }
+    gg_dev_apogee_SP212_irradiance_test();
 
     // Check batt
-    int batt_val = gg_dev_battery_read();
-    Serial.print(F("[P] battery value: "));
-    Serial.print(batt_val);
-    Serial.println(" mV");
-
-    if(batt_val < 0){
-        Serial.println(F("[P] \tError: battery out of range"));
-    }
+    gg_dev_battery_test();
 
     // check panel sensor value
-    int spanel_val = gg_dev_solar_panel_read();
-    Serial.print(F("[P] solar panel value: "));
-    Serial.print(spanel_val);
-    Serial.println(F(" mV"));
-
-    if(spanel_val < 100){
-        Serial.println(F("[P] \tERROR: solar panel value out of range"));
-    }
+    gg_dev_solar_panel_test();
 
     Serial.println(F("POST End"));
 
@@ -307,35 +264,86 @@ static int gg_board_ready_run_cmd(struct gg_board* b){
  *
  ******************************/
 
-static void gg_board_run_cmd(struct gg_board* b){
-    Serial.println(F("Enter CMD Mode"));
-    while(Serial.read() != '\n');
-    while(1){
-        if(Serial.available()){
-            char input = Serial.read();
-            Serial.print(F("GOT A CMD: "));
-            Serial.println(input);
-            while(Serial.read() != '\n');
-            if(input == 'E') {
-                Serial.println(F("Leaving CMD mode"));
-                break;
-            }
-            else{
-                switch(input){
-                    case 'T':
-                        Serial.println(F("CMD Mode cmd"));
-                        break;
-                    case 'P':
-                        Serial.println(F("Running POST"));
-                        b->post();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-    }
-}
+ static void gg_board_run_cmd(struct gg_board* b){
+     Serial.println(F("\nEnter CMD Mode"));
+     Serial.println(F("[E] - Exit Command Mode"));
+     Serial.println(F("[P] - Run Power On Self-Test"));
+     Serial.println(F("[S] - Sensor Sampling Menu"));
+
+
+     while(Serial.read() != '\n'); //In Arduino IDE, make sure line ending is \n
+     while(1){
+         if(Serial.available()){
+             char input = Serial.read(), input2;
+
+             Serial.print(F("GOT A CMD: "));
+             Serial.println(input);
+             while(Serial.read() != '\n');
+             if(input == 'E') {
+                 Serial.println(F("Leaving CMD Mode"));
+                 break;
+             }
+             else{
+                 switch(input){
+                     case 'P':
+                         Serial.println(F("Running POST"));
+                         b->post();
+                         break;
+                     case 'S':
+                         Serial.println(F("\nSensor Sampling Menu"));
+                         Serial.println(F("[1] - Node Address"));
+                         Serial.println(F("[2] - BME280 Temperature (cK)"));
+                         Serial.println(F("[3] - BME280 Humidity (\%)"));
+                         Serial.println(F("[4] - BME280 Pressure (Pa)"));
+                         Serial.println(F("[5] - SP212 Solar Irradiance (mW)"));
+                         Serial.println(F("[6] - Battery Voltage (mW)"));
+                         Serial.println(F("[7] - Solar Panel Voltage (mW)"));
+                         Serial.println(F("[E] - Exit to Main Menu"));
+
+                         while(1){
+                             if(Serial.available()){
+                                 input2 = Serial.read();
+                                 Serial.print(F("GOT A CMD: "));
+                                 Serial.println(input2);
+                                 while(Serial.read() != '\n');
+                                     if(input2 == 'E'){
+                                         Serial.println(F("Exiting to Main Menu"));
+                                         break;
+                                     }
+                                     switch(input2){
+                                         case '1':
+                                             gg_dev_eeprom_node_address_test();
+                                             break;
+                                         case '2':
+                                             gg_dev_adafruit_BME280_temperature_test();
+                                             break;
+                                         case '3':
+                                             gg_dev_adafruit_BME280_humidity_test();
+                                             break;
+                                         case '4':
+                                             gg_dev_adafruit_BME280_pressure_test();
+                                             break;
+                                         case '5':
+                                             gg_dev_apogee_SP212_irradiance_test();
+                                             break;
+                                         case '6':
+                                             gg_dev_battery_test();
+                                             break;
+                                         case '7':
+                                             gg_dev_solar_panel_test();
+                                             break;
+                                         default:
+                                             break;
+                                   }
+                               }
+                           }
+                     default:
+                         break;
+                 }
+             }
+         }
+     }
+ }
 
 /******************************
  *

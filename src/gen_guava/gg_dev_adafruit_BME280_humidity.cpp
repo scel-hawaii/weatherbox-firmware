@@ -42,3 +42,14 @@ uint16_t gg_dev_adafruit_BME280_humidity_read(void) {
 
   return value;
 }
+
+void gg_dev_adafruit_BME280_humidity_test(void){
+  int BME280_humidity_val = gg_dev_adafruit_BME280_humidity_read();
+  Serial.print(F("[P] BME280 Humidity value: "));
+  Serial.print(BME280_humidity_val);
+  Serial.println("\%");
+
+  if(BME280_humidity_val < 0){
+      Serial.println(F("[P] \tError: Humidity out of range"));
+  }
+}

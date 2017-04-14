@@ -40,3 +40,14 @@ int gg_dev_battery_read(void){
 
     return val;
 }
+
+void gg_dev_battery_test(void){
+  int batt_val = gg_dev_battery_read();
+  Serial.print(F("[P] battery value: "));
+  Serial.print(batt_val);
+  Serial.println(" mV");
+
+  if(batt_val < 0){
+      Serial.println(F("[P] \tError: battery out of range"));
+  }
+}

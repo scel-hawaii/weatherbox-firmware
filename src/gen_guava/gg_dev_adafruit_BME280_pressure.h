@@ -15,4 +15,5 @@
 #define GG_DEV_ADAFRUIT_BME280_PRESSURE_H
 void gg_dev_adafruit_BME280_pressure_open(void);
 uint16_t gg_dev_adafruit_BME280_pressure_read(void);
+void gg_dev_adafruit_BME280_pressure_test(void);
 #endif

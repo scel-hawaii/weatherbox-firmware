@@ -264,35 +264,86 @@ static int ga_board_ready_run_cmd(struct ga_board* b){
  *
  ******************************/
 
-static void ga_board_run_cmd(struct ga_board* b){
-    Serial.println(F("Enter CMD Mode"));
-    while(Serial.read() != '\n');
-    while(1){
-        if(Serial.available()){
-            char input = Serial.read();
-            Serial.print(F("GOT A CMD: "));
-            Serial.println(input);
-            while(Serial.read() != '\n');
-            if(input == 'E') {
-                Serial.println(F("Leaving CMD mode"));
-                break;
-            }
-            else{
-                switch(input){
-                    case 'T':
-                        Serial.println(F("CMD Mode cmd"));
-                        break;
-                    case 'P':
-                        Serial.println(F("Running POST"));
-                        b->post();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-    }
-}
+ static void ga_board_run_cmd(struct ga_board* b){
+     Serial.println(F("\nEnter CMD Mode"));
+     Serial.println(F("[E] - Exit Command Mode"));
+     Serial.println(F("[P] - Run Power On Self-Test"));
+     Serial.println(F("[S] - Sensor Sampling Menu"));
+
+
+     while(Serial.read() != '\n'); //In Arduino IDE, make sure line ending is \n
+     while(1){
+         if(Serial.available()){
+             char input = Serial.read(), input2;
+
+             Serial.print(F("GOT A CMD: "));
+             Serial.println(input);
+             while(Serial.read() != '\n');
+             if(input == 'E') {
+                 Serial.println(F("Leaving CMD Mode"));
+                 break;
+             }
+             else{
+                 switch(input){
+                     case 'P':
+                         Serial.println(F("Running POST"));
+                         b->post();
+                         break;
+                     case 'S':
+                         Serial.println(F("\nSensor Sampling Menu"));
+                         Serial.println(F("[1] - Node Address"));
+                         Serial.println(F("[2] - BMP180 Temperature (cK)"));
+                         Serial.println(F("[3] - SHT1X Humidity (\%)"));
+                         Serial.println(F("[4] - BMP180 Pressure (Pa)"));
+                         Serial.println(F("[5] - SP212 Solar Irradiance (mW)"));
+                         Serial.println(F("[6] - Battery Voltage (mW)"));
+                         Serial.println(F("[7] - Solar Panel Voltage (mW)"));
+                         Serial.println(F("[E] - Exit to Main Menu"));
+
+                         while(1){
+                             if(Serial.available()){
+                                 input2 = Serial.read();
+                                 Serial.print(F("GOT A CMD: "));
+                                 Serial.println(input2);
+                                 while(Serial.read() != '\n');
+                                     if(input2 == 'E'){
+                                         Serial.println(F("Exiting to Main Menu"));
+                                         break;
+                                     }
+                                     switch(input2){
+                                         case '1':
+                                             ga_dev_eeprom_node_address_test();
+                                             break;
+                                         case '2':
+                                             ga_dev_apogee_BMP180_temperature_test();
+                                             break;
+                                         case '3':
+                                             ga_dev_sensirion_SHT1X_humidity_test();
+                                             break;
+                                         case '4':
+                                             ga_dev_apogee_BMP180_pressure_test();
+                                             break;
+                                         case '5':
+                                             ga_dev_apogee_SP212_irradiance_test();
+                                             break;
+                                         case '6':
+                                             ga_dev_battery_test();
+                                             break;
+                                         case '7':
+                                             ga_dev_solar_panel_test();
+                                             break;
+                                         default:
+                                             break;
+                                   }
+                               }
+                           }
+                     default:
+                         break;
+                 }
+             }
+         }
+     }
+ }
 
 /******************************
  *
