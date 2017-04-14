@@ -44,3 +44,16 @@ uint32_t ga_dev_apogee_BMP180_pressure_read(void){
 
     return value;
 }
+
+void ga_dev_apogee_BMP180_pressure_test(void){
+  int32_t bmp085_val = ga_dev_apogee_BMP180_pressure_read();
+  Serial.print(F("[P] BMP180 value: "));
+  Serial.print(bmp085_val/100);
+  Serial.print(F("."));
+  Serial.print((bmp085_val-bmp085_val/10)/1000);
+  Serial.println(" mb");
+
+  if(bmp085_val < 80000){
+      Serial.println(F("[P] \tError: BMP180 pressure out of range"));
+  }
+}

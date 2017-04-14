@@ -14,4 +14,5 @@
 #define GA_DEV_SOLAR_PANEL
 void ga_dev_solar_panel_open(void);
 int ga_dev_solar_panel_read(void);
+void ga_dev_solar_panel_test(void);
 #endif

@@ -15,4 +15,5 @@
 void ga_dev_battery_open(void);
 int ga_dev_battery_read_raw(void);
 int ga_dev_battery_read(void);
+void ga_dev_battery_test(void);
 #endif

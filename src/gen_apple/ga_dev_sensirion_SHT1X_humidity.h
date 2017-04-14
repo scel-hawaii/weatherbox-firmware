@@ -13,4 +13,5 @@
 #define GA_DEV_SENSIRION_SHT1X_HUMIDITY_H
 void ga_dev_sensirion_SHT1X_humidity_open(void);
 int ga_dev_sensirion_SHT1X_humidity_read(void);
+void ga_dev_sensirion_SHT1X_humidity_test(void);
 #endif

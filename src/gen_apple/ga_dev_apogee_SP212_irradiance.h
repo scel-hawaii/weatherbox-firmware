@@ -15,4 +15,5 @@
 void ga_dev_apogee_SP212_irradiance_open(void);
 int ga_dev_apogee_SP212_irradiance_read_raw(void);
 int ga_dev_apogee_SP212_irradiance_read(void);
+void ga_dev_apogee_SP212_irradiance_test(void);
 #endif

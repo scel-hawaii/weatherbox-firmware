@@ -133,72 +133,25 @@ static void ga_board_post(){
     Serial.println(F("POST Begin"));
 
     // Display node addr
-    Serial.print(F("[P] node addr: "));
-    Serial.println((int) ga_dev_eeprom_node_address_read());
+    ga_dev_eeprom_node_address_test();
 
-    // Check sht1x
-    int sht1x_val = ga_dev_sensirion_SHT1X_humidity_read();
-    Serial.print(F("[P] sht1x value: "));
-    Serial.print(sht1x_val);
-    Serial.println("\%");
-
-    if(sht1x_val < 0){
-        Serial.println(F("[P] \tError: Humidity out of range"));
-    }
+    // Check SHT1X
+    ga_dev_sensirion_SHT1X_humidity_test();
 
     // Check BMP085
-    int32_t bmp085_val = ga_dev_apogee_BMP180_pressure_read();
-    Serial.print(F("[P] BMP180 value: "));
-    Serial.print(bmp085_val/100);
-    Serial.print(F("."));
-    Serial.print((bmp085_val-bmp085_val/10)/1000);
-    Serial.println(" mb");
-
-    if(bmp085_val < 80000){
-        Serial.println(F("[P] \tError: BMP180 pressure out of range"));
-    }
+    ga_dev_apogee_BMP180_pressure_test();
 
     // Check BMP085 temperature
-    uint16_t bmp085_temp = ga_dev_apogee_BMP180_temperature_read();
-    Serial.print(F("[P] BMP180 temp: "));
-    Serial.print(bmp085_temp/10);
-    Serial.print(".");
-    Serial.print((bmp085_temp-bmp085_temp/10)/10);
-    Serial.println(F(" celsius"));
-
-    if(bmp085_temp < 0){
-        Serial.println(F("[P] \tError: BMP180 temperature out of range"));
-    }
+    ga_dev_apogee_BMP180_temperature_test();
 
     // Check apogee_sp212
-    int apogee_sp212_val = ga_dev_apogee_SP212_irradiance_read();
-    Serial.print(F("[P] apogee_SP212 solar irradiance value: "));
-    Serial.print(apogee_sp212_val);
-    Serial.println(" mV");
-
-    if(apogee_sp212_val < 0){
-        Serial.println(F("[P] \tError: apogee solar irradiance out of range"));
-    }
+    ga_dev_apogee_SP212_irradiance_test();
 
     // Check batt
-    int batt_val = ga_dev_battery_read();
-    Serial.print(F("[P] battery value: "));
-    Serial.print(batt_val);
-    Serial.println(" mV");
-
-    if(batt_val < 0){
-        Serial.println(F("[P] \tError: battery out of range"));
-    }
+    ga_dev_battery_test();
 
     // check panel sensor value
-    int spanel_val = ga_dev_solar_panel_read();
-    Serial.print(F("[P] solar panel value: "));
-    Serial.print(spanel_val);
-    Serial.println(F(" mV"));
-
-    if(spanel_val < 100){
-        Serial.println(F("[P] \tERROR: solar panel value out of range"));
-    }
+    ga_dev_solar_panel_test();
 
     Serial.println(F("POST End"));
 
