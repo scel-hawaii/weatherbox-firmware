@@ -42,7 +42,8 @@ output_file = open("emu_output.txt", "a", bufsize)
 print("Running emulator with build: " + firmware_build)
 
 launch_emu_cmd = "emu_base_model/obj-*/emu_base_model.elf emu_base_model/*.ihex"
-emu_proc = Popen([launch_emu_cmd], shell=True, stdout=output_file, stderr=output_file)
+# emu_proc = Popen([launch_emu_cmd], shell=True, stdout=output_file, stderr=output_file)
+emu_proc = Popen([launch_emu_cmd], shell=True)
 
 # Block and wait for the emulator model to come online
 # otherwise we don't be able to upload
@@ -57,7 +58,7 @@ print("Running upload command")
 upload_cmd = "cd " + build_dir + " && avrdude -p m328p -c arduino -P /tmp/simavr-uart0 -U flash:w:firmware.hex"
 # Use the 'call' command here to block execution until we want to
 # start reading from the virtual serial port
-upload_proc = call([upload_cmd], shell=True, stdout=output_file, stderr=output_file)
+upload_proc = call([upload_cmd], shell=True)
 
 ser = serial.Serial('/tmp/simavr-uart0', 9600)
 
@@ -73,5 +74,5 @@ signal.signal(signal.SIGTERM, signal_term_handler)
 
 while True:
     result = ser.read()
-    output_file.write(result)
-    # sys.stdout.write(result)
+    # output_file.write(result)
+    sys.stdout.write(result)
