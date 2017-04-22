@@ -3,7 +3,7 @@
 # you want to.
 
 ELF_PATH=emu_base_model/obj-*/emu_base_model.elf
-IHEX_PATH=emu_base_model/*.ihex
+IHEX_PATH=emu_base_model/firmware.hex
 
 # Execute the ELF file, giving the IHEX bootloader path. Must be run in the emu/ directory
 # to work properly.

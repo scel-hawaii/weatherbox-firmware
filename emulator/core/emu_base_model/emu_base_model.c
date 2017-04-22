@@ -154,6 +154,10 @@ int main(int argc, char *argv[])
 	avr_init(avr);
 	avr->frequency = freq;
 
+	// initialize our 'peripheral', setting the mask to allow read and write
+	i2c_eeprom_init(avr, &ee, 0xa0, 0x01, NULL, 1024);
+	i2c_eeprom_attach(avr, &ee, AVR_IOCTL_TWI_GETIRQ(0));
+
 	memcpy(avr->flash + boot_base, boot, boot_size);
 	free(boot);
 	avr->pc = boot_base;

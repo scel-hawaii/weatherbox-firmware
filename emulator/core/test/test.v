@@ -1,5 +1,8 @@
 module test(
+    reset
 );
+
+input reset;
 
 initial begin
     $display("Hello World");
