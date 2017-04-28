@@ -164,6 +164,7 @@ static void gd_board_sample(struct gd_board* b){
     Serial.print(millis());
     Serial.print("] ");
     Serial.println(F("Sample Start"));
+
     // Disabled this for dragonfruit deployment on 2016-10-20 with T=30s
     // Serial.println(b->sample_count);
 

@@ -62,6 +62,7 @@ struct ga_board{
     unsigned long prev_sample_ms;
     unsigned long prev_heartbeat_ms;
     int sample_count;
+    int cycle_count;
     uint16_t node_addr;
     struct ga_packet data_packet;
 };

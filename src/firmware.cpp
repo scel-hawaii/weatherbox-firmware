@@ -100,13 +100,13 @@ void setup(){
        Dragonfruit: Prescalar=256, so each clock cycle takes (1/16MHz)*256 secs.
        So, 1 second will elapse after 16*10^6/256 clock cycles have elapsed.
        16-bit timer so clock will overflow after 2^16 clock cycles
-       So, we need to preload timer with value = 2^16 - 16*10^6/256 = 0x0BDC
+       So, we need to preload timer with value = 2^16 - 16*10^6/256 = 0x0BDC, 3036
        Cranberry: Prescalar=256, so each clock cycle takes (1/8MHz)*256 secs.
        So, 1 second will elapse after 8*10^6/256 clock cycles have elapsed.
        16-bit timer so clock will overflow after 2^16 clock cycles
        So, we need to preload timer with value = 2^16 - 8*10^6/256 = 0x085EE
     */
-    TCNT1=0x0BDC;
+    TCNT1=3036;
 
     /* Set the timer control register B
        Bits 0-2, clock select bits: set the prescalar to 1:256
@@ -120,6 +120,8 @@ void setup(){
     // Set timer interrupt mask register
     // Enable timer 1 to interrupt on overflow
     TIMSK1=0x01;
+
+    //digitalWrite(A0, HIGH);
 }
 
 /*********************************************
@@ -146,14 +148,15 @@ void loop(){
       f_timer=0;
       board.cycle_count++;
       if (board.cycle_count%3==0){
-          board.sample(&board);
           board.heartbeat_tx(&board);
       }
       if (board.cycle_count%30==0){
-          // board.sample(&board);
-          board.tx(&board);
+          // TODO: Move tx out of board sample function
+          board.sample(&board);
       }
+      Serial.println(board.cycle_count);
 
+      PRR = PRR|0b00100000;
       set_sleep_mode(SLEEP_MODE_IDLE);    // Power down microchip on sleep mode
       sleep_enable();                     // Set the sleep enable bit
       power_adc_disable();                // Disable peripherals
@@ -167,6 +170,7 @@ void loop(){
       sleep_cpu();                        // Put device into sleep mode*/
 
       sleep_disable();                    // Clear the sleep enable bit
+      PRR = PRR & 0b00000000;
       power_all_enable();                 // Reenable peripherals
     }
     sei();                                // Enable global interrupts
@@ -174,11 +178,12 @@ void loop(){
 
 // Use 16-bit timer interrupt, timer 1
 ISR(TIMER1_OVF_vect){
+  //digitalWrite(A0, !digitalRead(A0));
   // set the flag
   // if timer has overflowed, set the timer flag to 1
-   if(f_timer == 0)
+  if(f_timer == 0)
    {
      f_timer = 1;
    }
-   Serial.println(F("timer 1"));
+   TIFR1 = 0x00;
 }
