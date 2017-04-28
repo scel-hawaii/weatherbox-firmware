@@ -39,6 +39,8 @@
 #include <HIH613x.h>
 #include <XBee.h>
 #include <Adafruit_BME280.h>
+#include <avr/sleep.h>
+#include <avr/power.h>
 
 #ifdef GA
 struct ga_board board;
@@ -105,8 +107,13 @@ void setup(){
  *
  ********************************************/
 void loop(){
-    if(board.ready_sample(&board))  board.sample(&board);
-    if(board.ready_tx(&board))      board.tx(&board);
-    if(board.ready_run_cmd(&board))      board.run_cmd(&board);
-    if(board.ready_heartbeat_tx(&board))      board.heartbeat_tx(&board);
+	set_sleep_mode(SLEEP_MODE_IDLE);
+	sleep_enable();
+	power_adc_disable();
+	power_spi_disable();
+	power_timer0_disable();
+	power_timer2_disable();
+	power_twi_disable();
+	sleep_mode();
 }
+
