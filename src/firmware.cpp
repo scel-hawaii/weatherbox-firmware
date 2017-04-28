@@ -18,12 +18,15 @@
 #include "gen_cranberry/gc_board.h"
 #elif defined(GD)
 #include "gen_dragonfruit/gd_board.h"
+#elif defined(GG)
+#include "gen_guava/gg_board.h"
 #endif
 
 /* Arudino Libraries */
 #include <Wire.h>
 #include <EEPROM.h>
 #include <SoftwareSerial.h>
+#include <SPI.h>
 
 /* External Libraries */
 #include <SHT1x.h>
@@ -38,6 +41,7 @@
 #include <avr/power.h>
 #include <HIH613x.h>
 #include <XBee.h>
+#include <Adafruit_BME280.h>
 
 #ifdef GA
 struct ga_board board;
@@ -52,6 +56,9 @@ struct gd_board board;
 #endif
 
 volatile int f_timer=0;
+#ifdef GG
+struct gg_board board;
+#endif
 /*********************************************
  *
  *    Name:        setup
@@ -73,6 +80,10 @@ void setup(){
 
     #ifdef GD
     gd_board_init(&board);
+    #endif
+
+    #ifdef GG
+    gg_board_init(&board);
     #endif
 
     board.print_build_opts();
