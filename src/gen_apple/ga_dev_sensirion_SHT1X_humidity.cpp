@@ -50,3 +50,14 @@ int ga_dev_sensirion_SHT1X_humidity_read(void)
 
     return value;
 }
+
+void ga_dev_sensirion_SHT1X_humidity_test(void){
+    int sht1x_val = ga_dev_sensirion_SHT1X_humidity_read();
+    Serial.print(F("[P] sht1x value: "));
+    Serial.print(sht1x_val);
+    Serial.println("\%");
+
+    if(sht1x_val < 0){
+        Serial.println(F("[P] \tError: Humidity out of range"));
+    }
+}

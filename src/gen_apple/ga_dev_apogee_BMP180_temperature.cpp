@@ -39,9 +39,22 @@ int16_t ga_dev_apogee_BMP180_temperature_read(void){
     int16_t value = 1000;
 
     #ifndef SEN_STUB
-    float value_f = bmp180.readTemperature();
+    value = bmp180.readTemperature();
     //value = value_f * 10;
     #endif
 
     return value;
+}
+
+void ga_dev_apogee_BMP180_temperature_test(void){
+  uint16_t bmp085_temp = ga_dev_apogee_BMP180_temperature_read();
+  Serial.print(F("[P] BMP180 temp: "));
+  Serial.print(bmp085_temp/10);
+  Serial.print(".");
+  Serial.print((bmp085_temp-bmp085_temp/10)/10);
+  Serial.println(F(" celsius"));
+
+  if(bmp085_temp < 0){
+      Serial.println(F("[P] \tError: BMP180 temperature out of range"));
+  }
 }

@@ -15,4 +15,5 @@
 #define GG_DEV_ADAFRUIT_BME280_TEMPERATURE_H
 void gg_dev_adafruit_BME280_temperature_open(void);
 uint16_t gg_dev_adafruit_BME280_temperature_read(void);
+void gg_dev_adafruit_BME280_temperature_test(void);
 #endif

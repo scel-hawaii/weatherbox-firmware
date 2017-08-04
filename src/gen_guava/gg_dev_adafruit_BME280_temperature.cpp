@@ -42,3 +42,14 @@ uint16_t gg_dev_adafruit_BME280_temperature_read(void) {
 
   return value;
 }
+
+void gg_dev_adafruit_BME280_temperature_test(void){
+  uint16_t BME280_temperature_val = gg_dev_adafruit_BME280_temperature_read();
+  Serial.print(F("[P] BME280 Temperature value: "));
+  Serial.print(BME280_temperature_val);
+  Serial.println(F(" C"));
+
+  if(BME280_temperature_val < 0){
+      Serial.println(F("[P] \tError: Temperature out of range"));
+  }
+}
