@@ -1,6 +1,16 @@
 This is a small simavr-based emulator that allows you to quickly test
 firmware builds for the weatherbox firmware.
 
+TODO:
+
+* biggest goal: having an EASY framework to script tests with
+* Cleanup some of the scripts .. we still don't have proper classes
+    for everything
+* Integrate attached devices that can be simulated; for example, if we tune the
+    battery voltage what happens?
+* use SWIG?
+
+
 ## Running the GUI
 
 * Open up a terminal in the emu/ folder and run `python server.py`
