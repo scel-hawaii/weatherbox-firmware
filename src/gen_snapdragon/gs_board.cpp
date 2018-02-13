@@ -27,14 +27,14 @@ static void gs_board_heartbeat_tx(struct gs_board* b);
 
 /******************************
  *
- * Name:        gd_board_init
+ * Name:        gs_board_init
  * Returns:     Nothing
- * Parameter:   Function pointer to struct gd_board
+ * Parameter:   Function pointer to struct gs_board
  * Description: Initialize Dragonfruit board
  *
  ******************************/
 
-void gd_board_init(gs_board *b){
+void gs_board_init(gs_board *b){
     // Link functions to make them accessable
     b->print_build_opts = &gs_board_print_build_opts;
     b->setup = &gs_board_setup;
@@ -73,7 +73,7 @@ void gd_board_init(gs_board *b){
 
 /******************************
  *
- * Name:        gd_board_print_build_opts
+ * Name:        gs_board_print_build_opts
  * Returns:     Nothing
  * Parameter:   Nothing
  * Description: Initialize board generation and baudrate
@@ -89,9 +89,9 @@ static void gs_board_print_build_opts()
 
 /******************************
  *
- * Name:        gd_board_setup
+ * Name:        gs_board_setup
  * Returns:     Nothing
- * Parameter:   Function pointer to struct gd_board
+ * Parameter:   Function pointer to struct gs_board
  * Description: Enable sensor pin, initialize sensors,
  *              obtain node address from eeprom
  *
@@ -115,7 +115,7 @@ static void gs_board_setup(struct gs_board* b){
     gs_dev_eeprom_node_address_open();
 
     // Load the address from the hardware
-    b->node_address = gc_dev_eeprom_node_address_read();
+    b->node_address = gs_dev_eeprom_node_address_read();
 
     delay(100);
     Serial.println(F("Board Setup Done"));
@@ -123,7 +123,7 @@ static void gs_board_setup(struct gs_board* b){
 
 /******************************
  *
- * Name:        gc_board_post
+ * Name:        gs_board_post
  * Returns:     Nothing
  * Parameter:   Nothing
  * Description: Power on self test when board initially starts
@@ -163,7 +163,7 @@ static void gs_board_post(){
  *
  * Name:        gs_board_sample
  * Returns:     Nothing
- * Parameter:   Function pointer to struct ga-board
+ * Parameter:   Function pointer to struct gs-board
  * Description: Sample each sensor and store into data packet
  *
  ******************************/
@@ -176,14 +176,14 @@ static void gs_board_sample(struct gs_board* b){
     // Disabled this for apple deployment on 2016-10-06 with T=30s
     // Serial.println(b->sample_count);
 
-    struct ga_packet* data_packet = &(b->data_packet);
+    struct gs_packet* data_packet = &(b->data_packet);
     data_packet->uptime_milliseconds                      = millis();
     data_packet->battery_millivolts                       = gs_dev_battery_read();
     data_packet->panel_millivolts                         = gs_dev_solar_panel_read();
     data_packet->SP215_irradiance_watts_per_square_meter  = gs_dev_apogess_SP215_irradiance_read();
     data_packet->DS18B20Z_temperature_kelvin              = gs_dev_maximintegrated_DS18B20Z_temperature_centik_read();
     data_packet->SHT11_humidity_percent                   = gs_dev_sensirionAG_SHT11_humidity_pct_read();
-    data_packet->MPL115A2T1_pressure_pascals              =  gs_dev_nxpusainc_MPL115A2T1_pressure_pa_read();
+    data_packet->MPL115A2T1_pressure_pascals              = gs_dev_nxpusainc_MPL115A2T1_pressure_pa_read();
 
     Serial.println(F("Sample End"));
     b->sample_count = 0;
@@ -197,7 +197,7 @@ static void gs_board_sample(struct gs_board* b){
  *
  * Name:        gs_board_ready_tx
  * Returns:     Integer indicating if ready to transmit
- * Parameter:   Function pointer to struct gd-board
+ * Parameter:   Function pointer to struct gs-board
  * Description: Checks if board is ready to transmit
  *
  ******************************/
@@ -220,7 +220,7 @@ static void gs_board_sample(struct gs_board* b){
   *
   * Name:        gs_board_ready_sample
   * Returns:     Integer indicating if ready to sample
-  * Parameter:   Function pointer to struct gd-board
+  * Parameter:   Function pointer to struct gs-board
   * Description: Waits 30 seconds between sampling sensors
   *              and returns a "1" after 30 seconds. This
   *              implementation is used instead of a delay
@@ -245,7 +245,7 @@ static void gs_board_sample(struct gs_board* b){
   *
   * Name:        gs_board_ready_run_cmd
   * Returns:     Number of bytes available to read
-  * Parameter:   Function pointer to struct gc-board
+  * Parameter:   Function pointer to struct gs-board
   * Description: Get the number of bytes avaiable for reading from the serial port
   *
   ******************************/
@@ -258,7 +258,7 @@ static void gs_board_sample(struct gs_board* b){
   *
   * Name:        gs_board_run_cmd
   * Returns:     Nothing
-  * Parameter:   Function pointer to struct gd-board
+  * Parameter:   Function pointer to struct gs-board
   * Description: Poll sensors in CMD mode in serial monitor
   *
   ******************************/
@@ -296,7 +296,7 @@ static void gs_board_sample(struct gs_board* b){
   *
   * Name:        gs_board_ready_heartbeat_tx
   * Returns:     Integer indicating if ready to transmit
-  * Parameter:   Function pointer to struct gd-board
+  * Parameter:   Function pointer to struct gs-board
   * Description: Waits 30 seconds between sampling sensors
   *              and returns a "1" after 30 seconds. This
   *              implementation is used instead of a delay
@@ -332,15 +332,15 @@ static void gs_board_sample(struct gs_board* b){
 
  /******************************
   *
-  * Name:        gd_board_heartbeat_tx
+  * Name:        gs_board_heartbeat_tx
   * Returns:     Nothing
-  * Parameter:   Function pointer to struct gd-board
+  * Parameter:   Function pointer to struct gs-board
   * Description: Transmits heartbeat packet
   *
   ******************************/
 
  static void gs_board_heartbeat_tx(struct gs_board* b){
-     uint8_t payload[_GD_DEV_DIGI_XBEE_BUFSIZE_];
+     uint8_t payload[_GS_DEV_DIGI_XBEE_BUFSIZE_];
      struct gs_heartbeat_packet hb_packet;
 
      hb_packet.schema = 0;
@@ -367,13 +367,13 @@ static void gs_board_sample(struct gs_board* b){
   *
   * Name:        gs_board_tx
   * Returns:     Nothing
-  * Parameter:   Function pointer to struct gc-board
+  * Parameter:   Function pointer to struct gs-board
   * Description: Transmits sensor packet
   *
   ******************************/
 
  static void gs_board_tx(struct gs_board* b){
-     uint8_t payload[_GC_DEV_DIGI_XBEE_BUFSIZE_];
+     uint8_t payload[_GS_DEV_DIGI_XBEE_BUFSIZE_];
      int schema_len = sizeof(b->data_packet);
 
      Serial.println(F("Sample TX Start"));
