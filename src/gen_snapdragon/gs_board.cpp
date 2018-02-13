@@ -105,9 +105,9 @@ static void gs_board_setup(struct gs_board* b){
     digitalWrite(_PIN_SEN_EN_, HIGH);
 
     //Open Devices
-    gs_dev_sensirionAG_SHT11_humidity_open();
-    gs_dev_nxpusainc_MPL115A2T1_pressure_open();
-    gs_dev_maximintegrated_DS18B20Z_temperature_open();
+    gs_dev_sensirion_SHT11_humidity_open();
+    gs_dev_nxpusa_MPL115A2T1_pressure_open();
+    gs_dev_maxim_DS18B20_temperature_open();
     gs_dev_apogee_SP215_irradiance_open();
     gs_dev_digi_xbee_open();
     gs_dev_battery_open();
@@ -139,13 +139,13 @@ static void gs_board_post(){
      gs_dev_eeprom_node_address_test();
 
      //Check MPL115A2T1 Temperature
-     gs_dev_maximintegrated_DS18B20Z_temperature_centik_test();
+     gs_dev_maxim_DS18B20_temperature_centik_test();
 
      //Check SHT11 Humidity
-     gs_dev_sensirionAG_SHT11_humidity_pct_test();
+     gs_dev_sensirion_SHT11_humidity_pct_test();
 
      //Check MPL115A2T1 Pressure
-     gs_dev_nxpusainc_MPL115A2T1_pressure_pa_test();
+     gs_dev_nxpusa_MPL115A2T1_pressure_pa_test();
 
      //Check apogee_sp215
      gs_dev_apogee_SP215_irradiance_test();
@@ -181,9 +181,9 @@ static void gs_board_sample(struct gs_board* b){
     data_packet->battery_millivolts                       = gs_dev_battery_read();
     data_packet->panel_millivolts                         = gs_dev_solar_panel_read();
     data_packet->SP215_irradiance_watts_per_square_meter  = gs_dev_apogess_SP215_irradiance_read();
-    data_packet->DS18B20Z_temperature_kelvin              = gs_dev_maximintegrated_DS18B20Z_temperature_centik_read();
-    data_packet->SHT11_humidity_percent                   = gs_dev_sensirionAG_SHT11_humidity_pct_read();
-    data_packet->MPL115A2T1_pressure_pascals              = gs_dev_nxpusainc_MPL115A2T1_pressure_pa_read();
+    data_packet->DS18B20_temperature_kelvin               = gs_dev_maxim_DS18B20_temperature_centik_read();
+    data_packet->SHT11_humidity_percent                   = gs_dev_sensirion_SHT11_humidity_pct_read();
+    data_packet->MPL115A2T1_pressure_pascals              = gs_dev_nxpusa_MPL115A2T1_pressure_pa_read();
 
     Serial.println(F("Sample End"));
     b->sample_count = 0;
