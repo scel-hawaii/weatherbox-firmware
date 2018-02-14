@@ -26,7 +26,7 @@ struct gs_packet{
 	uint16_t panel_millivolts;                          // Panel Voltage (in milli volts)
 	uint32_t mpl115a2t1_pressure_pascals;                  // Pressure Value (in pascals)
 	uint16_t DS18B20_temperature_kelvin;                // Temperature Value (in Kelvin)
-	uint16_t SHT1X_humidity_percent;                  // Humidity Value (in percentage)
+	uint16_t SHT11_humidity_percent;                  // Humidity Value (in percentage)
 	uint16_t sp215_irradiance_watts_per_square_meter;  // Solar Irradiance Value (in W/m^2)
 };
 
