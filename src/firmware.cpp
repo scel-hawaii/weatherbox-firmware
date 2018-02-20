@@ -20,6 +20,8 @@
 #include "gen_dragonfruit/gd_board.h"
 #elif defined(GG)
 #include "gen_guava/gg_board.h"
+#elif defined(GS)
+#include "gen_snapdragon/gs_board.h"
 #endif
 
 /* Arudino Libraries */
@@ -55,6 +57,10 @@ struct gd_board board;
 #ifdef GG
 struct gg_board board;
 #endif
+
+#ifdef GS
+struct gs_board board;
+#endif
 /*********************************************
  *
  *    Name:        setup
@@ -80,6 +86,10 @@ void setup(){
 
     #ifdef GG
     gg_board_init(&board);
+    #endif
+
+    #ifdef GS
+    gs_board_init(&board);
     #endif
 
     board.print_build_opts();
