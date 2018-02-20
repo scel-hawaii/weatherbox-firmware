@@ -10,7 +10,7 @@
  *
  ******************************/
 
-#include "gs_dev_sensirion_SHT1X_humidity.h"
+#include "gs_dev_sensirion_SHT11_humidity.h"
 
 #define _PIN_HUMID_CLK 7
 #define _PIN_HUMID_DATA 8
@@ -26,7 +26,7 @@ static SHT1x sht1x(_PIN_HUMID_DATA, _PIN_HUMID_CLK);
  *
  ******************************/
 
-void gs_dev_sensirion_SHT1X_humidity_open(void)
+void gs_dev_sensirion_SHT11_humidity_open(void)
 {
 
 }
@@ -40,7 +40,7 @@ void gs_dev_sensirion_SHT1X_humidity_open(void)
  *
  ******************************/
 
-int gs_dev_sensirion_SHT1X_humidity_read(void)
+int gs_dev_sensirion_SHT11_humidity_read(void)
 {
     int value = 60;
 

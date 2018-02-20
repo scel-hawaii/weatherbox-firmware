@@ -12,7 +12,7 @@
 #include "gs_dev_solar_panel.h"
 #include "gs_dev_eeprom_node_address.h"
 #include "gs_dev_maxim_DS18B20.h"
-#include "gs_dev_sensirion_SHT1X_humidity.h"
+#include "gs_dev_sensirion_SHT11_humidity.h"
 #include "gs_dev_adafruit_MPL115A2_pressure.h"
 
 #ifndef gs_BOARD_H

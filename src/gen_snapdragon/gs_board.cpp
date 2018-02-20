@@ -66,8 +66,8 @@ void gs_board_init(gs_board *b){
     b->data_packet.battery_millivolts = 0;
     b->data_packet.panel_millivolts = 0;
     b->data_packet.sp215_irradiance_watts_per_square_meter = 0;
-    b->data_packet.mpl115a2t1_temperature_kelvin = 0;
-    b->data_packet.hih6131_humidity_percent = 0;
+    b->data_packet.DS18B20_temperature_kelvin = 0;
+    b->data_packet.SHT11_humidity_percent = 0;
     b->data_packet.mpl115a2t1_pressure_pascals = 0;
 }
 
@@ -101,12 +101,9 @@ static void gs_board_setup(struct gs_board* b){
     Serial.begin(9600);
     Serial.println(F("Board Setup Start"));
 
-    //Sensor On/Off, sets enable pin HIGH
-    digitalWrite(_PIN_SEN_EN_, HIGH);
-
     //Open Devices
     gs_dev_sensirion_SHT11_humidity_open();
-    gs_dev_nxpusa_MPL115A2T1_pressure_open();
+    gs_dev_adafruit_MPL115A2_pressure_open();
     gs_dev_maxim_DS18B20_temperature_open();
     gs_dev_apogee_SP215_irradiance_open();
     gs_dev_digi_xbee_open();
@@ -139,7 +136,7 @@ static void gs_board_post(){
      gs_dev_eeprom_node_address_test();
 
      //Check MPL115A2T1 Temperature
-     gs_dev_maxim_DS18B20_temperature_centik_test();
+     gs_dev_maxim_DS18B20_temperature_test();
 
      //Check SHT11 Humidity
      gs_dev_sensirion_SHT11_humidity_pct_test();

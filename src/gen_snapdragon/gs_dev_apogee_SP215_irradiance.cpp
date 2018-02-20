@@ -30,7 +30,7 @@ void gs_dev_apogee_SP215_irradiance_open(void){
     Wire.begin();
 
     /* Begin transmission to the I2C slave device with the given address */
-    Wire.beginTransmission(_DEV_ADDR_GD_ADS1100_);
+    Wire.beginTransmission(_DEV_ADDR_GS_ADS1100_);
 
     /* Send configuration register bits to I2C slave device.
        Bit 7: Set ST/BSY bit to 1 to start conversion.
@@ -57,10 +57,10 @@ uint32_t gs_dev_apogee_SP215_irradiance_read(void){
     #ifndef SEN_STUB
 
     /* Begin transmission to the I2C slave device with the given address */
-    Wire.beginTransmission(_DEV_ADDR_GD_ADS1100_);
+    Wire.beginTransmission(_DEV_ADDR_GS_ADS1100_);
 
     /* Request bytes from I2C slave device */
-    Wire.requestFrom(_DEV_ADDR_GD_ADS1100_, 3);
+    Wire.requestFrom(_DEV_ADDR_GS_ADS1100_, 3);
     if(Wire.available())
     {
         value = Wire.read();
