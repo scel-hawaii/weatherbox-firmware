@@ -24,11 +24,11 @@ Adafruit_BME280 bme_temperature(BME_CS, BME_MOSI, BME_MISO, BME_SCK); // Softwar
 #endif
 */
 
-void gg_dev_maxim_DS18B20_temperature_open(void) {
+void gs_dev_maxim_DS18B20_temperature_open(void) {
   sensors.begin();
 }
 
-uint16_t gg_dev_maxim_DS18B20_temperature_read(void) {
+uint16_t gs_dev_maxim_DS18B20_temperature_read(void) {
   int value = 100;
 
   #ifndef SEN_STUB
@@ -36,4 +36,18 @@ uint16_t gg_dev_maxim_DS18B20_temperature_read(void) {
   #endif
 
   return value;
+}
+
+void gs_dev_maxim_DS18B20_temperature_test(void) {
+
+    Serial.println(F("[P] Check DS18B20_temperature_test value"));
+    int DS18B20_temperature_val = gs_dev_maxim_DS18B20_temperature_read();
+
+    Serial.print(F("[P] DS18B20_temperature value: "));
+    Serial.print(DS18B20_temperature_val);
+    Serial.println(F(" cF"));
+
+    if(DS18B20_temperature_val < 0){
+        Serial.println(F("[P] \tError: DS18B20 temp out of range"));
+    }
 }

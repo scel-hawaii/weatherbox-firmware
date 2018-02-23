@@ -88,6 +88,7 @@ uint32_t gs_dev_apogee_SP215_irradiance_read(void){
  ******************************/
 
 void gs_dev_apogee_SP215_irradiance_test(void) {
+
   Serial.println(F("[P] Check apogee_SP215_irradiance value"));
   int apogee_sp215_irradiance_val = gs_dev_apogee_SP215_irradiance_read();
 

@@ -142,7 +142,7 @@ static void gs_board_post(){
      gs_dev_sensirion_SHT11_humidity_pct_test();
 
      //Check MPL115A2T1 Pressure
-     gs_dev_nxpusa_MPL115A2T1_pressure_pa_test();
+     gs_dev_adafruit_MPL115A2_pressure_pa_test();
 
      //Check apogee_sp215
      gs_dev_apogee_SP215_irradiance_test();
@@ -177,10 +177,10 @@ static void gs_board_sample(struct gs_board* b){
     data_packet->uptime_milliseconds                      = millis();
     data_packet->battery_millivolts                       = gs_dev_battery_read();
     data_packet->panel_millivolts                         = gs_dev_solar_panel_read();
-    data_packet->SP215_irradiance_watts_per_square_meter  = gs_dev_apogess_SP215_irradiance_read();
-    data_packet->DS18B20_temperature_kelvin               = gs_dev_maxim_DS18B20_temperature_centik_read();
-    data_packet->SHT11_humidity_percent                   = gs_dev_sensirion_SHT11_humidity_pct_read();
-    data_packet->MPL115A2T1_pressure_pascals              = gs_dev_nxpusa_MPL115A2T1_pressure_pa_read();
+    data_packet->SP215_irradiance_watts_per_square_meter  = gs_dev_apogee_SP215_irradiance_read();
+    data_packet->DS18B20_temperature_kelvin               = gs_dev_maxim_DS18B20_temperature_read();
+    data_packet->SHT11_humidity_percent                   = gs_dev_sensirion_SHT11_humidity_read();
+    data_packet->MPL115A2T1_pressure_pascals              =gs_dev_adafruit_MPL115A2_pressure_pa_read();
 
     Serial.println(F("Sample End"));
     b->sample_count = 0;

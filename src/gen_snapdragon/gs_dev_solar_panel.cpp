@@ -42,3 +42,14 @@ int gs_dev_solar_panel_read(void){
 
     return value;
 }
+void gs_dev_solar_panel_test(void){
+
+  int spanel_val = gs_dev_solar_panel_read();
+  Serial.print(F("[P] solar panel value: "));
+  Serial.print(spanel_val);
+  Serial.println(F(" mV"));
+
+  if(spanel_val < 100){
+      Serial.println(F("[P] \tERROR: solar panel value out of range"));
+  }
+}
