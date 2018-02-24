@@ -57,7 +57,7 @@ void gs_dev_sensirion_SHT11_humidity_pct_test(void) {
   Serial.print(sht11_val);
   Serial.println("\%");
 
-  if(sht1x_val < 0){
+  if(sht11_val < 0){
       Serial.println(F("[P] \tError: Humidity out of range"));
   }
 }
