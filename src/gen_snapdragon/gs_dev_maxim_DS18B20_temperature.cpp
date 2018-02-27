@@ -15,14 +15,8 @@
 /* IMPORTANT: The communication protocol must be the same in all drivers */
 //#define I2C //Define communication protocol as seen below
 
-/*#ifdef HardwareSPI
-Adafruit_BME280 bme_temperature(BME_CS); // Hardware SPI
-#endif
-
-#ifdef SoftwareSPI
-Adafruit_BME280 bme_temperature(BME_CS, BME_MOSI, BME_MISO, BME_SCK); // Software SPI
-#endif
-*/
+OneWire oneWire(ONE_WIRE_BUS);
+DallasTemperature sensors(&oneWire);
 
 void gs_dev_maxim_DS18B20_temperature_open(void) {
   sensors.begin();
@@ -32,7 +26,8 @@ uint16_t gs_dev_maxim_DS18B20_temperature_read(void) {
   int value = 100;
 
   #ifndef SEN_STUB
-   value = DallasTemperature::toFahrenheit(sensors.requestTemperatures());
+   sensors.requestTemperatures();
+   value = sensors.getTempCByIndex(0) + 273; //Kelvin
   #endif
 
   return value;
@@ -45,7 +40,7 @@ void gs_dev_maxim_DS18B20_temperature_test(void) {
 
     Serial.print(F("[P] DS18B20_temperature value: "));
     Serial.print(DS18B20_temperature_val);
-    Serial.println(F(" cF"));
+    Serial.println(F(" K"));
 
     if(DS18B20_temperature_val < 0){
         Serial.println(F("[P] \tError: DS18B20 temp out of range"));

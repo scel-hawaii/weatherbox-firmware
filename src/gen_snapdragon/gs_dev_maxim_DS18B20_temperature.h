@@ -8,6 +8,7 @@
 
 #include <OneWire.h>
 #include <DallasTemperature.h>
+#define ONE_WIRE_BUS 3
 
 #ifndef GS_DEV_MAXIM_DS18B20_TEMPERATURE_H
 #define GS_DEV_MAXIM_DS18B20_TEMPERATURE_H
