@@ -8,7 +8,7 @@
 
 #include <Arduino.h>
 
-#define _PIN_GS_BATTERY_ A3
+#define _PIN_GS_BATTERY_ A0
 
 #ifndef GS_DEV_BATTERY_H
 #define GS_DEV_BATTERY_H
