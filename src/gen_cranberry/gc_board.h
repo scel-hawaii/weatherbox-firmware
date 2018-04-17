@@ -14,6 +14,7 @@
 #include "gc_dev_honeywell_HIH6131_temperature.h"
 #include "gc_dev_honeywell_HIH6131_humidity.h"
 #include "gc_dev_adafruit_MPL115A2_pressure.h"
+#include "gc_dev_adafruit_FGPMMOPA6H_GPS.h"
 
 #ifndef GC_BOARD_H
 #define GC_BOARD_H
@@ -30,6 +31,9 @@ struct gc_packet{
     uint16_t hih6131_temperature_kelvin;               // Temperature Value (Celsius)
     uint16_t hih6131_humidity_percent;                 // Humidity Value (percentage)
     uint32_t mpl115a2t1_pressure_pascals;               // Pressure Value (Pascal)
+    char fgpmmopa6h_longitude;                        // GPS longitude (Degrees)
+    char fgpmmopa6h_latitude;                         // GPS latitude (Degrees)
+    uint8_t fgpmmopa6h_altitude;                       // GPS altitude (Meters)
 };
 
 struct gc_heartbeat_packet{
