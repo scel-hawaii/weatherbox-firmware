@@ -69,9 +69,9 @@ void gc_board_init(gc_board *b){
     b->data_packet.hih6131_temperature_kelvin = 0;
     b->data_packet.hih6131_humidity_percent = 0;
     b->data_packet.mpl115a2t1_pressure_pascals = 0;
-    b->data_packet.GPS_longitude = 0;
-    b->data_packet.GPS_latitude = 0;
-    b->data_packet.GPS_altitude = 0;
+    b->data_packet.gps_longitude = 0;
+    b->data_packet.gps_latitude = 0;
+    b->data_packet.gps_altitude = 0;
 }
 
 /******************************
@@ -191,9 +191,9 @@ static void gc_board_sample(struct gc_board* b){
     data_packet->hih6131_temperature_kelvin              = gc_dev_honeywell_HIH6131_temperature_centik_read();
     data_packet->hih6131_humidity_percent                = gc_dev_honeywell_HIH6131_humidity_pct_read();
     data_packet->mpl115a2t1_pressure_pascals             = gc_dev_adafruit_MPL115A2_pressure_pa_read();
-    data_packet->GPS_longitude                           = gc_dev_adafruit_FGPMMOPA6H_longitude();
-    data_packet->GPS_latitude                            = gc_dev_adafruit_FGPMMOPA6H_latitude();
-    data_packet->GPS_altitude                            = gc_dev_adafruit_FGPMMOPA6H_altitude();
+    data_packet->gps_longitude                           = gc_dev_adafruit_GPS_longitude();
+    data_packet->gps_latitude                            = gc_dev_adafruit_GPS_latitude();
+    data_packet->gps_altitude                            = gc_dev_adafruit_GPS_altitude();
 
     Serial.println(F("Sample End"));
     b->sample_count = 0;
@@ -310,7 +310,7 @@ static void gc_board_run_cmd(struct gc_board* b){
                         Serial.println(F("[7] - Solar Panel Voltage (mW)"));
                         Serial.println(F("[8] - Longitude (Degrees)"));
                         Serial.println(F("[9] - Latitude (Degrees)"));
-                        Serial.println(F("[0] - Altitude (M)"))
+                        Serial.println(F("[0] - Altitude (M)"));
                         Serial.println(F("[E] - Exit to Main Menu"));
 
                         while(1){

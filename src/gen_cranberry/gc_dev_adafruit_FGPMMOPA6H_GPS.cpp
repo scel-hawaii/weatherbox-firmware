@@ -14,7 +14,8 @@
 
 
 
-static Adafruit_FGMMOPA6H GPS;
+Adafruit_GPS gps(3, 2);
+
 
 /******************************
  *
@@ -26,9 +27,10 @@ static Adafruit_FGMMOPA6H GPS;
  ******************************/
 void gc_dev_adafruit_GPS_open(void){
 
-  GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);
-  GPS.sendCommand(PMTK_SET_NMEA_UPDATE_1HZ);
-  GPS.sendCommand(PGCMD_ANTENNA);
+  gps.begin;
+  gps.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);
+  gps.sendCommand(PMTK_SET_NMEA_UPDATE_1HZ);
+  gps.sendCommand(PGCMD_ANTENNA);
   useInterrupt(true);
 
 }
@@ -39,7 +41,7 @@ void gc_dev_adafruit_GPS_open(void){
  * Name:        gc_dev_adafruit_longitude
  * Returns:     Longitude value in Degrees
  * Parameter:   Nothing
- * Description: Reads GPS data
+ * Description: Reads gps data
  *
  ******************************/
 
@@ -48,11 +50,11 @@ uint8_t gc_dev_adafruit_GPS_longitude(void){
 uint8_t value;
 
 #ifndef SEN_STUB
-  if (GPS.newNMEAreceived()){
-    GPS.parse(GPS.lastNMEA());
+  if (gps.newNMEAreceived()){
+    gps.parse(gps.lastNMEA());
   }
-      if(GPS.fix){
-        value = GPS.longitudeDegrees, 4;
+      if(gps.fix){
+        value = gps.longitudeDegrees, 4;
       }
       else{
         Serial.print("Waiting for fix...");
@@ -66,7 +68,7 @@ uint8_t value;
  * Name:        gc_dev_adafruit_latitude_read
  * Returns:     Latitude value in Degrees
  * Parameter:   Nothing
- * Description: Reads GPS data
+ * Description: Reads gps data
  *
  ******************************/
 
@@ -75,11 +77,11 @@ uint8_t gc_dev_adafruit_GPS_latitude(void){
 uint8_t value;
 
 #ifndef SEN_STUB
-   if (GPS.newNMEAreceived()){
-     GPS.parse(GPS.lastNMEA());
+   if (gps.newNMEAreceived()){
+     gps.parse(gps.lastNMEA());
   }
-      if(GPS.fix){
-        value = GPS.latitudeDegrees;
+      if(gps.fix){
+        value = gps.latitudeDegrees;
       }
       else{
         Serial.print("Waiting for fix...");
@@ -93,7 +95,7 @@ return value;
  * Name:        gc_dev_adafruit_altitude_read
  * Returns:     Altitude value in meters
  * Parameter:   Nothing
- * Description: Reads GPS data
+ * Description: Reads gps data
  *
  ******************************/
 
@@ -102,12 +104,12 @@ uint8_t gc_dev_adafruit_GPS_altitude(void){
 uint8_t value;
 
 #ifndef SEN_STUB
-     if (GPS.newNMEAreceived()){
-       GPS.parse(GPS.lastNMEA());
+     if (gps.newNMEAreceived()){
+       gps.parse(gps.lastNMEA());
      }
-       if(GPS.fix){
-    //Converting GPS altitude in CM to M
-        value = GPS.altitude / 100;
+       if(gps.fix){
+    //Converting gps altitude in CM to M
+        value = gps.altitude / 100;
       }
       else{
         Serial.print("Waiting for fix...");
@@ -127,17 +129,17 @@ uint8_t value;
 
 void gc_dev_adafruit_GPS_test(void){
 
-      Serial.println(F("[GPS] Check fgpmmopa6h_gps"))
-      if (GPS.newNMEAreceived()){
-        GPS.parse(GPS.lastNMEA());
+      Serial.println(F("[gps] Check fgpmmopa6h_gps"));
+      if (gps.newNMEAreceived()){
+        gps.parse(gps.lastNMEA());
       }
-        if(GPS.fix){
+        if(gps.fix){
         Serial.print("Latitude:");
-          Serial.print(GPS.latitudeDegrees, 4);
+          Serial.print(gps.latitudeDegrees, 4);
           Serial.print("Longitude:");
-          Serial.println(GPS.longitudeDegrees, 4);
+          Serial.println(gps.longitudeDegrees, 4);
           Serial.print("altitude:");
-           Serial.println(GPS.altitude);
+           Serial.println(gps.altitude);
          }
          else{
          Serial.print("Waiting for fix...");

@@ -8,16 +8,18 @@
 
 #include <Arduino.h>
 #include <Adafruit_GPS.h>
-#include <NewSoftSerial.h>
+#include <SoftwareSerial.h>
 
 
 #ifndef GC_DEV_FGPMMOPA6H
 #define GC_DEV_FGPMMOPA6H
 
+boolean usingInterrupt = false;
+void useInterrupt(boolean);
 void gc_dev_adafruit_GPS_open(void);
 uint8_t gc_dev_adafruit_GPS_longitude(void);
 uint8_t gc_dev_adafruit_GPS_latitude(void);
 uint8_t gc_dev_adafruit_GPS_altitude(void);
 void gc_dev_adafruit_GPS_test(void);
 
-SoftwareSerial mySerial(3, 2); /* Pins for arduino */5
+#endif

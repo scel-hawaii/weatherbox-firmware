@@ -31,9 +31,9 @@ struct gc_packet{
     uint16_t hih6131_temperature_kelvin;               // Temperature Value (Celsius)
     uint16_t hih6131_humidity_percent;                 // Humidity Value (percentage)
     uint32_t mpl115a2t1_pressure_pascals;               // Pressure Value (Pascal)
-    char fgpmmopa6h_longitude;                        // GPS longitude (Degrees)
-    char fgpmmopa6h_latitude;                         // GPS latitude (Degrees)
-    uint8_t fgpmmopa6h_altitude;                       // GPS altitude (Meters)
+    uint8_t gps_longitude;                              // gps longitude (Degrees)
+    uint8_t gps_latitude;                               // gps latitude (Degrees)
+    uint8_t gps_altitude;                              // gps altitude (Meters)
 };
 
 struct gc_heartbeat_packet{
